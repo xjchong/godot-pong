@@ -9,7 +9,6 @@ const DECCELERATION: float = 0.2
 export var player_id: int
 export var default_position: Vector2
 
-
 var velocity: Vector2 = Vector2()
 
 

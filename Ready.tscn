@@ -1,0 +1,69 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://fonts/GravityRegular5.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Ready.gd" type="Script" id=2]
+[ext_resource path="res://sounds/select.wav" type="AudioStream" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 12
+font_data = ExtResource( 1 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "ConfirmAnimation"
+length = 0.5
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:rect_scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 1.4, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:rect_scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 1.4, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5 )
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:custom_colors/font_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.992157, 0.960784, 0.890196, 1 ), Color( 0.992157, 0.960784, 0.890196, 0 ) ]
+}
+
+[node name="Ready" type="Label"]
+anchor_right = 5.0
+margin_right = -3933.0
+margin_bottom = 12.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_pivot_offset = Vector2( 33, 6 )
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.992157, 0.960784, 0.890196, 1 )
+text = "Ready!"
+align = 1
+valign = 1
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/ConfirmAnimation = SubResource( 2 )
+
+[node name="ReadyAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
