@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 400, 10 )
+
+[node name="Wall" type="StaticBody2D" groups=[
+"wall",
+]]
+position = Vector2( 400, 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color( 0.992157, 0.960784, 0.890196, 1 )
+polygon = PoolVector2Array( -400, 8, -400, -8, 400, -8, 400, 8 )
+__meta__ = {
+"_edit_lock_": true
+}
