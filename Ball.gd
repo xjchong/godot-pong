@@ -3,6 +3,7 @@ extends KinematicBody2D
 
 
 const DEFAULT_VELOCITY: float = 400.0
+const MAX_VELOCITY: float = 2000.0
 const ACCELERATION: float = 1.05
 const DECCELERATION: float = 0.2
 
@@ -51,6 +52,12 @@ func _physics_process(delta):
 		
 		base_velocity_x = -base_velocity_x * ACCELERATION
 		
+		# Clamp the velocity to reasonable max, otherwise weird things can happen.
+		if base_velocity_x < 0:
+			base_velocity_x = max(base_velocity_x, -MAX_VELOCITY)
+		else:
+			base_velocity_x = min(base_velocity_x, MAX_VELOCITY)
+		
 		# If the vertical velocity of the ball is 'countered', then the
 		#  horizontal velocity is given a temporary boost depending on how
 		#  much vertical velocity was absorbed.
@@ -62,6 +69,7 @@ func _physics_process(delta):
 			velocity.x = base_velocity_x - magnitude_y_delta
 
 		velocity.y = next_velocity_y
+		
 		if !paddle_bounce_audio.playing: 
 			paddle_bounce_audio.play()
 		
