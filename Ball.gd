@@ -62,7 +62,9 @@ func _physics_process(delta):
 			velocity.x = base_velocity_x - magnitude_y_delta
 
 		velocity.y = next_velocity_y
-		paddle_bounce_audio.play()
-	elif collider.is_in_group("wall"):
+		if !paddle_bounce_audio.playing: 
+			paddle_bounce_audio.play()
+		
+	if collider.is_in_group("wall"):
 		velocity.y = -velocity.y
 		wall_bounce_audio.play()
