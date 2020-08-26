@@ -20,32 +20,40 @@ export var default_position: Vector2
 
 var velocity: Vector2 = Vector2()
 var torque: float = 0.0
+var _did_move: bool = false
 
 	
 func _physics_process(_delta):	
-	var next_torque = torque
 	if Input.is_action_pressed("player_%s_up" % player_id):
-		velocity.y = lerp(velocity.y, -MAX_VELOCITY, ACCELERATION)
-		next_torque = lerp(torque, -MAX_TORQUE, TORQUE_GROWTH)
+		move_up()
 	elif Input.is_action_pressed("player_%s_down" % player_id):
-		velocity.y = lerp(velocity.y, MAX_VELOCITY, ACCELERATION)
-		next_torque = lerp(torque, MAX_TORQUE, TORQUE_GROWTH)
+		move_down()
+	elif _did_move:
+		_did_move = false
 	else:
 		velocity.y = lerp(velocity.y, 0, DECCELERATION)
-		next_torque = 0.0
+		torque = 0.0
 		
 	var collision: KinematicCollision2D = move_and_collide(velocity)
 	
-	# No collision, just apply the next torque.
 	if collision == null:
-		torque = next_torque
 		return
 	
 	# Paddle hit the wall, torque is cancelled completely.	
 	if collision.get_collider().is_in_group("wall"):
 		torque = 0.0
-	else:
-		torque = next_torque		
+	
+	
+func move_up():
+	velocity.y = lerp(velocity.y, -MAX_VELOCITY, ACCELERATION)
+	torque = lerp(torque, -MAX_TORQUE, TORQUE_GROWTH)
+	_did_move = true
+	
+
+func move_down():
+	velocity.y = lerp(velocity.y, MAX_VELOCITY, ACCELERATION)
+	torque = lerp(torque, MAX_TORQUE, TORQUE_GROWTH)
+	_did_move = true
 	
 	
 func get_velocity(hit_position: Vector2, hit_velocity: Vector2, _hit_torque: float) -> Vector2:
