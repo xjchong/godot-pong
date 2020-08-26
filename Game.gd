@@ -2,13 +2,12 @@ class_name Game
 extends Node2D
 
 
-const MIN_ROUND_SCORE: int = 21
-const MIN_ROUND_MARGIN: int = 2
-
 export var is_against_ai: bool
 
 var screen_size: Vector2
 var is_game_running: bool = false
+var _ai_dest_pos: Vector2
+var _ai_start_pos: Vector2
 
 onready var ball: Ball = $Ball
 onready var p1_paddle: Paddle = $Player1Paddle
@@ -26,8 +25,8 @@ func _ready() -> void:
 	is_against_ai = GameSetting.is_against_ai
 	
 	if is_against_ai:
-		p2_ready.toggle(false)
-	
+		_reset_ai()
+
 	
 func _process(delta):
 	if Input.is_action_pressed("player_1_up"):
@@ -86,11 +85,36 @@ func _new_game():
 	is_game_running = false
 	
 	if is_against_ai:
-		p2_ready.toggle(false)
+		_reset_ai()
+
+
+func _reset_ai():
+	p2_ready.toggle(false)
+	_ai_start_pos = p2_paddle.position
+	_ai_dest_pos = p2_paddle.position
 
 
 func _handle_ai():
-	if ball.position.y > p2_paddle.position.y:
-		p2_paddle.move_down()
-	elif ball.position.y < p2_paddle.position.y:
-		p2_paddle.move_up()
+	var allowable_distance = 20.0
+	var current_pos = p2_paddle.position
+	var min_pos_y = 100.0
+	var max_pos_y = 400.0
+	var boredom_chance = 0.08
+	var has_reached_dest = (
+		abs(abs(current_pos.y) - abs(_ai_dest_pos.y)) < allowable_distance
+	)
+	
+	if has_reached_dest:
+		_ai_start_pos = current_pos
+		_ai_dest_pos.x = current_pos.x
+			
+		# Set a new destination
+		if ball.velocity.x < 0 and rand_range(0, 1) < boredom_chance:
+			_ai_dest_pos.y = rand_range(min_pos_y, max_pos_y)
+		elif ball.velocity.x > 0:
+			_ai_dest_pos.y = clamp(ball.position.y, min_pos_y, max_pos_y)
+	else:
+		if _ai_dest_pos.y > current_pos.y:
+			p2_paddle.move_down()
+		elif _ai_dest_pos.y < current_pos.y:
+			p2_paddle.move_up()
