@@ -15,7 +15,6 @@ const BLADE_TENSION: float = 0.8 # Horizontal hit velocity multipler on counter.
 const BLADE_CONTROL_DECAY: float = 2.0 # Higher control has less vertical velocity variance.
 const BLADE_CONTROL_MAX_VARIANCE: float = 500.0 # Maximum vertical velocity applied.
 
-
 export var player_id: int
 export var default_position: Vector2
 
@@ -87,7 +86,6 @@ func get_torque(_hit_position: Vector2, hit_velocity: Vector2, hit_torque: float
 	var reduced_hit_torque = lerp(hit_torque, 0.0, 0.5)
 	var applied_torque = torque if hit_velocity.x > 0 else -torque
 	
-	print(torque)
 	return reduced_hit_torque + applied_torque
 	
 	

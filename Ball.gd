@@ -35,17 +35,16 @@ func _init():
 
 func start():
 	velocity.x = DEFAULT_VELOCITY if randi() % 2 == 0 else -DEFAULT_VELOCITY
-	_base_velocity.x = velocity.x
+	_base_velocity.x = -velocity.x
 	
 
 func reset(): 
-	motion_trail.trail_points.clear()
-	_base_velocity = Vector2()
-	velocity = Vector2()
 	position = default_position
-	_torque = 0.0
 	rotation_degrees = 0.0
-
+	motion_trail.trail_points.clear()
+	velocity = Vector2()
+	_base_velocity = Vector2()
+	_torque = 0.0
 
 func _physics_process(delta):
 	var collision: KinematicCollision2D = move_and_collide(velocity * delta)
