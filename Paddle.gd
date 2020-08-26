@@ -24,11 +24,7 @@ var _did_move: bool = false
 
 	
 func _physics_process(_delta):	
-	if Input.is_action_pressed("player_%s_up" % player_id):
-		move_up()
-	elif Input.is_action_pressed("player_%s_down" % player_id):
-		move_down()
-	elif _did_move:
+	if _did_move:
 		_did_move = false
 	else:
 		velocity.y = lerp(velocity.y, 0, DECCELERATION)

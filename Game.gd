@@ -23,6 +23,18 @@ func _ready() -> void:
 	set_process(true)
 	
 	
+func _process(delta):
+	if Input.is_action_pressed("player_1_up"):
+		p1_paddle.move_up()
+	elif Input.is_action_pressed("player_1_down"):
+		p1_paddle.move_down()
+		
+	if Input.is_action_pressed("player_2_up"):
+		p2_paddle.move_up()
+	elif Input.is_action_pressed("player_2_down"):
+		p2_paddle.move_down()
+	
+	
 func _unhandled_input(event):
 	if is_game_running:
 		return
@@ -55,7 +67,6 @@ func _new_game():
 	p1_paddle.reset()
 	p2_paddle.reset()
 	is_game_running = false
-	
 
 
 func _on_ScoreBoard_new_game():
