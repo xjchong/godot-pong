@@ -69,6 +69,7 @@ config/icon="res://icon.png"
 [autoload]
 
 GameColor="*res://autoload/GameColor.tscn"
+GameSetting="*res://autoload/GameSetting.tscn"
 
 [debug]
 

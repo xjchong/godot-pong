@@ -103,8 +103,12 @@ stream = ExtResource( 4 )
 [node name="ButtonPressAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 [connection signal="focus_entered" from="VBoxContainer2/Play1PButton" to="." method="_on_Button_focus_entered"]
+[connection signal="mouse_entered" from="VBoxContainer2/Play1PButton" to="." method="_on_Button_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer2/Play1PButton" to="." method="_on_Play1PButton_pressed"]
 [connection signal="focus_entered" from="VBoxContainer2/Play2PButton" to="." method="_on_Button_focus_entered"]
+[connection signal="mouse_entered" from="VBoxContainer2/Play2PButton" to="." method="_on_Button_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer2/Play2PButton" to="." method="_on_Play2PButton_pressed"]
 [connection signal="focus_entered" from="VBoxContainer2/OptionsButton" to="." method="_on_Button_focus_entered"]
+[connection signal="mouse_entered" from="VBoxContainer2/OptionsButton" to="." method="_on_Button_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer2/OptionsButton" to="." method="_on_OptionsButton_pressed"]
+[connection signal="finished" from="ButtonPressAudio" to="." method="_on_ButtonPressAudio_finished"]

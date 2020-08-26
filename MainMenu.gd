@@ -2,11 +2,15 @@ class_name MainMenu
 extends MarginContainer
 
 
+const GAME_SCENE_PATH = "res://Game.tscn"
+
 onready var _play_1p_button: Button = $VBoxContainer2/Play1PButton
 onready var _play_2p_button: Button = $VBoxContainer2/Play2PButton
 onready var _options_button: Button = $VBoxContainer2/OptionsButton
 onready var _button_hover_audio: AudioStreamPlayer = $ButtonHoverAudio
 onready var _button_press_audio: AudioStreamPlayer = $ButtonPressAudio
+
+var _next_scene: String = ""
 
 
 func _unhandled_key_input(_event):
@@ -18,18 +22,32 @@ func _unhandled_key_input(_event):
 	_play_1p_button.grab_focus()
 
 
+func _on_Button_mouse_entered():
+	_button_hover_audio.play()
+
+
 func _on_Button_focus_entered():
+	if Input.is_mouse_button_pressed(1):
+		return
+		
 	_button_hover_audio.play()
 	
 
 func _on_Play1PButton_pressed():
 	_button_press_audio.play()
+	GameSetting.is_against_ai = true
+	_next_scene = GAME_SCENE_PATH
 
 
 func _on_Play2PButton_pressed():
 	_button_press_audio.play()
-	get_tree().change_scene("res://Game.tscn")
+	_next_scene = GAME_SCENE_PATH
 
 
 func _on_OptionsButton_pressed():
 	_button_press_audio.play()
+
+
+func _on_ButtonPressAudio_finished():
+	get_tree().change_scene(_next_scene)
+	_next_scene = ""

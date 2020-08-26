@@ -13,10 +13,12 @@ func _ready():
 	is_ready = false
 	
 
-func toggle():
+func toggle(should_play_sound: bool = true):
 	visible = !visible
 	is_ready = !is_ready
-	ready_audio.play()
+	
+	if should_play_sound:
+		ready_audio.play()
 	
 
 func confirm():

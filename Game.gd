@@ -5,6 +5,8 @@ extends Node2D
 const MIN_ROUND_SCORE: int = 21
 const MIN_ROUND_MARGIN: int = 2
 
+export var is_against_ai: bool
+
 var screen_size: Vector2
 var is_game_running: bool = false
 
@@ -21,6 +23,10 @@ onready var game_win_audio: AudioStreamPlayer = $GameWinAudio
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
 	set_process(true)
+	is_against_ai = GameSetting.is_against_ai
+	
+	if is_against_ai:
+		p2_ready.toggle(false)
 	
 	
 func _process(delta):
@@ -28,11 +34,14 @@ func _process(delta):
 		p1_paddle.move_up()
 	elif Input.is_action_pressed("player_1_down"):
 		p1_paddle.move_down()
-		
-	if Input.is_action_pressed("player_2_up"):
-		p2_paddle.move_up()
-	elif Input.is_action_pressed("player_2_down"):
-		p2_paddle.move_down()
+	
+	if is_against_ai:
+		_handle_ai()
+	else:
+		if Input.is_action_pressed("player_2_up"):
+			p2_paddle.move_up()
+		elif Input.is_action_pressed("player_2_down"):
+			p2_paddle.move_down()
 	
 	
 func _unhandled_input(event):
@@ -53,6 +62,14 @@ func _on_Goal_goal_scored(player_id):
 
 	_new_game()
 	
+
+func _on_ScoreBoard_new_game():
+	game_win_audio.play()
+	
+	
+func _on_ScoreBoard_match_won(player_id: int):
+	print(player_id)
+	
 	
 func _start_round():
 	p1_ready.confirm()
@@ -67,11 +84,13 @@ func _new_game():
 	p1_paddle.reset()
 	p2_paddle.reset()
 	is_game_running = false
+	
+	if is_against_ai:
+		p2_ready.toggle(false)
 
 
-func _on_ScoreBoard_new_game():
-	game_win_audio.play()
-	
-	
-func _on_ScoreBoard_match_won(player_id: int):
-	print(player_id)
+func _handle_ai():
+	if ball.position.y > p2_paddle.position.y:
+		p2_paddle.move_down()
+	elif ball.position.y < p2_paddle.position.y:
+		p2_paddle.move_up()
