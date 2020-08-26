@@ -34,10 +34,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Ready.gd"
 }, {
-"base": "Label",
-"class": "Score",
+"base": "Node2D",
+"class": "ScoreBoard",
 "language": "GDScript",
-"path": "res://Score.gd"
+"path": "res://ScoreBoard.gd"
 }, {
 "base": "Line2D",
 "class": "Trail2D",
@@ -50,7 +50,7 @@ _global_script_class_icons={
 "Goal": "",
 "Paddle": "",
 "Ready": "",
-"Score": "",
+"ScoreBoard": "",
 "Trail2D": ""
 }
 

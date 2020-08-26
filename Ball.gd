@@ -85,8 +85,6 @@ func _physics_process(delta):
 		
 		base_velocity_x = -base_velocity_x * ACCELERATION
 		_torque = clamp(_torque + paddle_torque, -MAX_TORQUE, MAX_TORQUE)
-
-		print("paddle torque: %s, ball torque: %s" % [paddle_torque, _torque])
 		
 		# Clamp the velocity to reasonable max, otherwise weird things can happen.
 		if base_velocity_x < 0:

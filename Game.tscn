@@ -6,7 +6,7 @@
 [ext_resource path="res://Wall.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Goal.tscn" type="PackedScene" id=5]
 [ext_resource path="res://sounds/start.wav" type="AudioStream" id=6]
-[ext_resource path="res://Score.tscn" type="PackedScene" id=7]
+[ext_resource path="res://ScoreBoard.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Ready.tscn" type="PackedScene" id=8]
 
 [node name="Game" type="Node2D"]
@@ -44,34 +44,20 @@ player_id = 2
 [node name="StartAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
 
-[node name="Player1Score" parent="." instance=ExtResource( 7 )]
-anchor_right = 10.0
-margin_left = 312.0
-margin_top = 50.0
-margin_right = 352.0
-margin_bottom = 82.0
-player_id = 1
-
-[node name="Player2Score" parent="." instance=ExtResource( 7 )]
-margin_left = 448.0
-margin_top = 50.0
-margin_right = 488.0
-margin_bottom = 82.0
-align = 2
-player_id = 2
+[node name="ScoreBoard" parent="." instance=ExtResource( 7 )]
 
 [node name="Player1Ready" parent="." instance=ExtResource( 8 )]
-anchor_right = 0.0
-margin_left = 296.0
+margin_left = 328.0
 margin_top = 96.0
-margin_right = 363.0
-margin_bottom = 112.0
+margin_right = 395.0
+margin_bottom = 108.0
 
 [node name="Player2Ready" parent="." instance=ExtResource( 8 )]
-anchor_right = 0.0
-margin_left = 440.0
+margin_left = 424.0
 margin_top = 96.0
-margin_right = 507.0
-margin_bottom = 112.0
+margin_right = 491.0
+margin_bottom = 108.0
 [connection signal="goal_scored" from="Player1Goal" to="." method="_on_Goal_goal_scored"]
 [connection signal="goal_scored" from="Player2Goal" to="." method="_on_Goal_goal_scored"]
+[connection signal="match_won" from="ScoreBoard" to="." method="_on_ScoreBoard_match_won"]
+[connection signal="new_game" from="ScoreBoard" to="." method="_on_ScoreBoard_new_game"]
