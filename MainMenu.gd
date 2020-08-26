@@ -9,7 +9,7 @@ onready var _button_hover_audio: AudioStreamPlayer = $ButtonHoverAudio
 onready var _button_press_audio: AudioStreamPlayer = $ButtonPressAudio
 
 
-func _unhandled_key_input(event):
+func _unhandled_key_input(_event):
 	if _play_1p_button.has_focus() \
 			or _play_2p_button.has_focus() \
 			or _options_button.has_focus():

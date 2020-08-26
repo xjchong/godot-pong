@@ -11,12 +11,15 @@ const ACCELERATION: float = 1.05
 # Vertical velocity multiplier on bouncing off a wall.
 const DECCELERATION: float = 0.8 
 
-# Torque multipler after colliding with a surface.
+# Torque multiplier after colliding with a surface.
 const SURFACE_FRICTION: float = 0.5
 
-const MAX_TORQUE: float = 15.0
+const MAX_TORQUE: float = 30.0
 
-const MAX_TORQUE_VELOCITY: float = 15.0
+const MAX_TORQUE_VELOCITY: float = 30.0
+
+# Velocity on collision is increased by at most this percentage at max torque.
+const MAX_TORQUE_TRANSFER: float = 2.0
 
 # Vertical velocity multiplier when hitting paddle edge.
 const PADDLE_TENSION: float = 3.5
@@ -107,10 +110,18 @@ func _physics_process(delta):
 		if !paddle_bounce_audio.playing: 
 			paddle_bounce_audio.play()
 	elif collider.is_in_group("wall"):
+		var is_left_right_topspin = velocity.x > 0 and _torque > 0
+		var is_right_left_topspin = velocity.x < 0 and _torque < 0
+		
+		if is_left_right_topspin or is_right_left_topspin:
+			var transfer = (abs(_torque) / MAX_TORQUE) * MAX_TORQUE_TRANSFER
+			
+			velocity.x *= (1.0 + transfer)
+			
 		velocity.y = -velocity.y * DECCELERATION
 		wall_bounce_audio.play()
 
 func _apply_rotation(torque: float):
-	var rotation = torque / MAX_TORQUE * 30
+	var rotation = torque / MAX_TORQUE * 50
 
 	rotation_degrees = rotation_degrees + rotation
