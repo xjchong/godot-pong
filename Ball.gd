@@ -5,42 +5,28 @@ extends KinematicBody2D
 const DEFAULT_VELOCITY: float = 400.0
 const MAX_VELOCITY: float = 2000.0
 
-# Horizontal veocity multiplier on bouncing off a paddle.
-const ACCELERATION: float = 1.05
-
-# Vertical velocity multiplier on bouncing off a wall.
-const DECCELERATION: float = 0.8 
+# Horizontal veocity addition on bouncing off a paddle.
+const ACCELERATION_CONSTANT: float = 15.0
 
 # Torque multiplier after colliding with a surface.
-const SURFACE_FRICTION: float = 0.5
+const SURFACE_FRICTION: float = 0.7
 
 const MAX_TORQUE: float = 30.0
-
-const MAX_TORQUE_VELOCITY: float = 30.0
-
 # Velocity on collision is increased by at most this percentage at max torque.
-const MAX_TORQUE_TRANSFER: float = 2.0
-
-# Vertical velocity multiplier when hitting paddle edge.
-const PADDLE_TENSION: float = 3.5
-
-# Horizontal velocity multiplier when countering vertical velocity.
-const PADDLE_COUNTER_ACCELERATION: float = 2.3
+const MAX_TORQUE_TRANSFER: float = 1.5
+const MAX_TORQUE_VELOCITY: float = 60.0
+const TORQUE_GROWTH_CONSTANT: float = 5.0
 
 export var player_id: int
 export var default_position: Vector2 = Vector2(400, 250)
 
-# This starts at default velocity at the start of a round
-#  and increases as the round goes on.
-var base_velocity_x: float = DEFAULT_VELOCITY
-
 var _torque: float = 0.0
+var _base_velocity: Vector2 = Vector2()
+var velocity: Vector2 = Vector2()
 
 onready var motion_trail: Trail2D = $MotionTrail
 onready var paddle_bounce_audio: AudioStreamPlayer = $PaddleBounceAudio
 onready var wall_bounce_audio: AudioStreamPlayer = $WallBounceAudio
-
-var velocity: Vector2 = Vector2()
 
 
 func _init():
@@ -49,79 +35,81 @@ func _init():
 
 func start():
 	velocity.x = DEFAULT_VELOCITY if randi() % 2 == 0 else -DEFAULT_VELOCITY
-
+	_base_velocity.x = velocity.x
+	
 
 func reset(): 
 	motion_trail.trail_points.clear()
-	velocity = Vector2(0, 0)
+	_base_velocity = Vector2()
+	velocity = Vector2()
 	position = default_position
-	base_velocity_x = DEFAULT_VELOCITY
 	_torque = 0.0
 	rotation_degrees = 0.0
 
 
 func _physics_process(delta):
 	var collision: KinematicCollision2D = move_and_collide(velocity * delta)
-	
-	_apply_rotation(_torque)
+
+	_apply_torque()
 	
 	if collision == null:
-		var torque_velocity = (_torque / MAX_TORQUE) * MAX_TORQUE_VELOCITY
-		
-		if velocity.x > 0:
-			velocity.y += torque_velocity
-		else:
-			velocity.y -= torque_velocity
-			
 		return
 		
 	var collider = collision.get_collider()
-	
-	_torque = lerp(_torque, 0.0, SURFACE_FRICTION)
 
 	if collider.is_in_group("paddle"):
+		if _base_velocity.x < 0:
+			_base_velocity.x -= ACCELERATION_CONSTANT
+		else:
+			_base_velocity.x += ACCELERATION_CONSTANT
+		
+		_base_velocity.y = velocity.y
+		_base_velocity.x *= -1
+		_base_velocity.x = clamp(_base_velocity.x, -MAX_VELOCITY, MAX_VELOCITY)
+		
 		var paddle: Paddle = collider
-		var next_velocity_y = velocity.y + (position.y - paddle.position.y) * PADDLE_TENSION
-		var magnitude_y_delta = abs(next_velocity_y) - abs(velocity.y)
-		var paddle_torque = paddle.torque if base_velocity_x > 0 else \
-				-paddle.torque
+		var next_torque = paddle.get_torque(position, _base_velocity, _torque)
+		var next_velocity = paddle.get_velocity(position, _base_velocity, _torque)
 		
-		base_velocity_x = -base_velocity_x * ACCELERATION
-		_torque = clamp(_torque + paddle_torque, -MAX_TORQUE, MAX_TORQUE)
+		next_velocity.x = clamp(next_velocity.x, -MAX_VELOCITY, MAX_VELOCITY)
 		
-		# Clamp the velocity to reasonable max, otherwise weird things can happen.
-		if base_velocity_x < 0:
-			base_velocity_x = max(base_velocity_x, -MAX_VELOCITY)
-		else:
-			base_velocity_x = min(base_velocity_x, MAX_VELOCITY)
-		
-		# If the vertical velocity of the ball is 'countered', then the
-		#  horizontal velocity is given a temporary boost depending on how
-		#  much vertical velocity was absorbed.
-		if magnitude_y_delta > 0:
-			velocity.x = base_velocity_x
-		elif base_velocity_x < 0:
-			velocity.x = base_velocity_x + (magnitude_y_delta * PADDLE_COUNTER_ACCELERATION)
-		else:
-			velocity.x = base_velocity_x - (magnitude_y_delta * PADDLE_COUNTER_ACCELERATION)
-
-		velocity.y = next_velocity_y
+		velocity = next_velocity
+		_torque = next_torque
 		
 		if !paddle_bounce_audio.playing: 
 			paddle_bounce_audio.play()
-	elif collider.is_in_group("wall"):
-		var is_left_right_topspin = velocity.x > 0 and _torque > 0
-		var is_right_left_topspin = velocity.x < 0 and _torque < 0
+	elif collider.is_in_group("wall"):	
+		var is_topspin = (
+				velocity.x > 0 and velocity.y < 0 and _torque < 0 or
+				velocity.x > 0 and velocity.y > 0 and _torque > 0 or
+				velocity.x < 0 and velocity.y < 0 and _torque > 0 or
+				velocity.x < 0 and velocity.y > 0 and _torque < 0)
 		
-		if is_left_right_topspin or is_right_left_topspin:
+		if is_topspin:
 			var transfer = (abs(_torque) / MAX_TORQUE) * MAX_TORQUE_TRANSFER
 			
 			velocity.x *= (1.0 + transfer)
 			
-		velocity.y = -velocity.y * DECCELERATION
+		velocity.y *= -SURFACE_FRICTION
+			
+		_torque = lerp(_torque, 0.0, SURFACE_FRICTION)
 		wall_bounce_audio.play()
 
-func _apply_rotation(torque: float):
-	var rotation = torque / MAX_TORQUE * 50
+func _apply_torque():
+	var rotation = _torque / MAX_TORQUE * 50
+	var torque_percent = (
+			(pow(TORQUE_GROWTH_CONSTANT, abs(_torque / MAX_TORQUE)) - 1) 
+			/ (TORQUE_GROWTH_CONSTANT - 1))
+			
+	var torque_velocity = torque_percent * MAX_TORQUE_VELOCITY
+	
+	if _torque < 0:
+		torque_velocity *= -1.0
+		
+	if velocity.x > 0:
+		velocity.y += torque_velocity
+	else:
+		velocity.y -= torque_velocity
 
 	rotation_degrees = rotation_degrees + rotation
+	

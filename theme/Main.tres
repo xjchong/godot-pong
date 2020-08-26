@@ -12,7 +12,7 @@
 
 [sub_resource type="StyleBoxEmpty" id=5]
 
-[sub_resource type="StyleBoxFlat" id=7]
+[sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
 border_width_left = 10
 border_width_top = 10
@@ -20,12 +20,12 @@ border_width_right = 10
 border_width_bottom = 10
 border_color = Color( 0.996078, 0.968627, 0.905882, 1 )
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=7]
 size = 32
 font_data = ExtResource( 1 )
 
 [resource]
-default_font = SubResource( 6 )
+default_font = SubResource( 7 )
 Button/colors/font_color = Color( 0.992157, 0.960784, 0.890196, 1 )
 Button/colors/font_color_disabled = Color( 0.901961, 0.901961, 0.901961, 0.2 )
 Button/colors/font_color_hover = Color( 0.992157, 0.960784, 0.890196, 0.717647 )
@@ -46,4 +46,4 @@ Label/constants/shadow_offset_x = 1
 Label/constants/shadow_offset_y = 1
 Label/fonts/font = null
 Label/styles/normal = null
-PanelContainer/styles/panel = SubResource( 7 )
+PanelContainer/styles/panel = SubResource( 6 )

@@ -15,6 +15,7 @@ onready var score_board: ScoreBoard = $ScoreBoard
 onready var p1_ready: Ready = $Player1Ready
 onready var p2_ready: Ready = $Player2Ready
 onready var start_audio: AudioStreamPlayer = $StartAudio
+onready var game_win_audio: AudioStreamPlayer = $GameWinAudio
 
 
 func _ready() -> void:
@@ -58,8 +59,8 @@ func _new_game():
 
 
 func _on_ScoreBoard_new_game():
-	pass # Replace with function body.
+	game_win_audio.play()
 	
 	
 func _on_ScoreBoard_match_won(player_id: int):
-	pass # Replace with function body.
+	print(player_id)
