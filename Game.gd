@@ -12,11 +12,12 @@ var _ai_start_pos: Vector2
 onready var ball: Ball = $Ball
 onready var p1_paddle: Paddle = $Player1Paddle
 onready var p2_paddle: Paddle = $Player2Paddle
-onready var score_board: ScoreBoard = $ScoreBoard
+onready var score_board: ScoreBoard = $CanvasLayer/ScoreBoard
 onready var p1_ready: Ready = $Player1Ready
 onready var p2_ready: Ready = $Player2Ready
 onready var start_audio: AudioStreamPlayer = $StartAudio
 onready var game_win_audio: AudioStreamPlayer = $GameWinAudio
+onready var win_screen: WinScreen = $WinScreen
 
 
 func _ready() -> void:
@@ -28,7 +29,7 @@ func _ready() -> void:
 		_reset_ai()
 
 	
-func _process(delta):
+func _process(_delta):	
 	if Input.is_action_pressed("player_1_up"):
 		p1_paddle.move_up()
 	elif Input.is_action_pressed("player_1_down"):
@@ -67,7 +68,8 @@ func _on_ScoreBoard_new_game():
 	
 	
 func _on_ScoreBoard_match_won(player_id: int):
-	print(player_id)
+	get_tree().paused = true
+	win_screen.show(player_id)
 	
 	
 func _start_round():

@@ -41,6 +41,7 @@ func _on_Play1PButton_pressed():
 
 func _on_Play2PButton_pressed():
 	_button_press_audio.play()
+	GameSetting.is_against_ai = false
 	_next_scene = GAME_SCENE_PATH
 
 

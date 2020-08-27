@@ -7,7 +7,7 @@ signal match_won(player_id)
 
 const GAME_POINT_THRESHOLD = 10
 const GAME_WIN_MARGIN = 2
-const MATCH_POINT_THRESHOLD = 3
+const MATCH_POINT_THRESHOLD = 2
 
 var p1_game_score: int = 0
 var p2_game_score: int = 0
@@ -61,9 +61,10 @@ func _end_game():
 	p1_game_score = 0
 	p2_game_score = 0
 	
-	if p1_match_score > MATCH_POINT_THRESHOLD	 \
-			or p2_match_score > MATCH_POINT_THRESHOLD:
-		emit_signal("match_won")
+	if p1_match_score > MATCH_POINT_THRESHOLD:
+		emit_signal("match_won", 1)
+	elif p2_match_score > MATCH_POINT_THRESHOLD:
+		emit_signal("match_won", 2)
 	else:
 		emit_signal("new_game")
 	

@@ -1,0 +1,88 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://theme/Main.tres" type="Theme" id=1]
+[ext_resource path="res://WinScreen.gd" type="Script" id=2]
+[ext_resource path="res://sounds/victory.wav" type="AudioStream" id=3]
+[ext_resource path="res://sounds/wall_bounce.wav" type="AudioStream" id=4]
+[ext_resource path="res://sounds/paddle_bounce.wav" type="AudioStream" id=5]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform float blur : hint_range(0, 6) = 0.5;
+
+void fragment() {
+	vec4 color = texture(SCREEN_TEXTURE, SCREEN_UV, blur);
+	COLOR = color;
+}"
+custom_defines = ""
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/blur = 0.0
+
+[sub_resource type="Animation" id=3]
+resource_name = "BlurOutAnimation"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:material:shader_param/blur")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 2.841 ]
+}
+
+[node name="WinScreen" type="CanvasLayer"]
+pause_mode = 2
+script = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource( 2 )
+margin_left = -16.0
+margin_top = -16.0
+margin_right = 824.0
+margin_bottom = 512.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BlurOutAnimation" type="AnimationPlayer" parent="ColorRect"]
+anims/BlurOutAnimation = SubResource( 3 )
+
+[node name="CenterContainer" type="CenterContainer" parent="ColorRect"]
+margin_right = 800.0
+margin_bottom = 500.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WinnerDialog" type="AcceptDialog" parent="ColorRect/CenterContainer"]
+margin_left = 210.0
+margin_top = 188.0
+margin_right = 590.0
+margin_bottom = 311.0
+theme = ExtResource( 1 )
+window_title = ""
+dialog_text = "Player 1 Wins!
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WinAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+volume_db = -4.489
+
+[node name="HoverAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="ConfirmAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+[connection signal="animation_finished" from="ColorRect/BlurOutAnimation" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="confirmed" from="ColorRect/CenterContainer/WinnerDialog" to="." method="_on_AcceptDialog_confirmed"]
+[connection signal="finished" from="ConfirmAudio" to="." method="_on_ConfirmAudio_finished"]
