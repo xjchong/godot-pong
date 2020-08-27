@@ -114,7 +114,7 @@ func _handle_ai():
 		_ai_dest_pos.x = current_pos.x
 			
 		# Set a new destination
-		if ball.velocity.x < 0 and rand_range(0, 1) < boredom_chance:
+		if ball.velocity.x < 0 and rand_range(0, 1) < boredom_chance: 
 			_ai_dest_pos.y = rand_range(min_pos_y, max_pos_y)
 		elif ball.velocity.x < 0 and rand_range(0, 1) > sleep_chance:
 			_ai_dest_pos.y = clamp(ball.position.y, min_pos_y, max_pos_y)

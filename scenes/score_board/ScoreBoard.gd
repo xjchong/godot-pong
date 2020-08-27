@@ -2,7 +2,7 @@ class_name ScoreBoard
 extends Node2D
 
 
-signal new_game
+signal new_game()
 signal match_won(player_id)
 
 const GAME_POINT_THRESHOLD = 10
