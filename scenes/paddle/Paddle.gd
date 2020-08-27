@@ -6,8 +6,6 @@ const MAX_VELOCITY: float = 15.0
 const MAX_TORQUE: float = 15.0
 const ACCELERATION: float = 0.15
 const DECCELERATION: float = 0.2
-const TORQUE_GROWTH: float = 0.09
-
 const RUBBER_TACK: float = 15.0 # Max torque applied on hit.
 const RUBBER_SPEED: float = 1.05 # Horizontal hit velocity multipler.
 const BLADE_LENGTH: float = 112.0 # Should equal paddle height in pixels.
@@ -19,6 +17,8 @@ export var player_id: int
 export var default_position: Vector2
 
 var velocity: Vector2 = Vector2()
+var torque_growth: float = 0.09
+var torque_decay: float = 1.0
 var torque: float = 0.0
 var _did_move: bool = false
 
@@ -28,7 +28,7 @@ func _physics_process(_delta):
 		_did_move = false
 	else:
 		velocity.y = lerp(velocity.y, 0, DECCELERATION)
-		torque = 0.0
+		torque = lerp(torque, 0.0, torque_decay)
 		
 	var collision: KinematicCollision2D = move_and_collide(velocity)
 	
@@ -42,13 +42,13 @@ func _physics_process(_delta):
 	
 func move_up():
 	velocity.y = lerp(velocity.y, -MAX_VELOCITY, ACCELERATION)
-	torque = lerp(torque, -MAX_TORQUE, TORQUE_GROWTH)
+	torque = lerp(torque, -MAX_TORQUE, torque_growth)
 	_did_move = true
 	
 
 func move_down():
 	velocity.y = lerp(velocity.y, MAX_VELOCITY, ACCELERATION)
-	torque = lerp(torque, MAX_TORQUE, TORQUE_GROWTH)
+	torque = lerp(torque, MAX_TORQUE, torque_growth)
 	_did_move = true
 	
 	

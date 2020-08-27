@@ -20,7 +20,7 @@ func _on_AcceptDialog_confirmed():
 	confirm_audio.play()
 	
 
-func _on_AnimationPlayer_animation_finished(anim_name):
+func _on_AnimationPlayer_animation_finished(_anim_name):
 	winner_dialog.show()
 
 
