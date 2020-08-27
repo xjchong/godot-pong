@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/goal.wav-01798601fd2cecf34ea55b3c69c600d9.sample"
+path="res://.import/goal.wav-6fcf4b9a74420d12001aa273c1320de4.sample"
 
 [deps]
 
-source_file="res://sounds/goal.wav"
-dest_files=[ "res://.import/goal.wav-01798601fd2cecf34ea55b3c69c600d9.sample" ]
+source_file="res://assets/sounds/goal.wav"
+dest_files=[ "res://.import/goal.wav-6fcf4b9a74420d12001aa273c1320de4.sample" ]
 
 [params]
 

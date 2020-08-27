@@ -1,14 +1,14 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://ScoreBoard.gd" type="Script" id=1]
-[ext_resource path="res://fonts/GravityBold8.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://scenes/score_board/ScoreBoard.gd" type="Script" id=1]
+[ext_resource path="res://assets/fonts/GravityBold8.ttf" type="DynamicFontData" id=2]
 
 [sub_resource type="DynamicFont" id=1]
 size = 32
-font_data = ExtResource( 5 )
+font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=2]
-font_data = ExtResource( 5 )
+font_data = ExtResource( 2 )
 
 [node name="ScoreBoard" type="Node2D"]
 script = ExtResource( 1 )

@@ -1,24 +1,24 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://fonts/GravityBold8.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://theme/Main.tres" type="Theme" id=2]
-[ext_resource path="res://sounds/paddle_bounce.wav" type="AudioStream" id=3]
-[ext_resource path="res://sounds/wall_bounce.wav" type="AudioStream" id=4]
-[ext_resource path="res://MainMenu.gd" type="Script" id=5]
+[ext_resource path="res://scenes/main_menu/MainMenu.gd" type="Script" id=1]
+[ext_resource path="res://assets/fonts/GravityBold8.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://theme/Main.tres" type="Theme" id=3]
+[ext_resource path="res://assets/sounds/paddle_bounce.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/sounds/wall_bounce.wav" type="AudioStream" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 size = 64
-font_data = ExtResource( 1 )
+font_data = ExtResource( 2 )
 
 [node name="MainMenu" type="MarginContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = ExtResource( 2 )
+theme = ExtResource( 3 )
 custom_constants/margin_right = 50
 custom_constants/margin_top = 50
 custom_constants/margin_left = 50
 custom_constants/margin_bottom = 50
-script = ExtResource( 5 )
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -70,7 +70,7 @@ margin_top = 224.0
 margin_right = 280.0
 margin_bottom = 256.0
 focus_neighbour_top = NodePath("../OptionsButton")
-theme = ExtResource( 2 )
+theme = ExtResource( 3 )
 text = "Play 1P"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -80,7 +80,7 @@ __meta__ = {
 margin_top = 276.0
 margin_right = 280.0
 margin_bottom = 308.0
-theme = ExtResource( 2 )
+theme = ExtResource( 3 )
 text = "Play 2P"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -91,7 +91,7 @@ margin_top = 328.0
 margin_right = 280.0
 margin_bottom = 360.0
 focus_neighbour_bottom = NodePath("../Play1PButton")
-theme = ExtResource( 2 )
+theme = ExtResource( 3 )
 disabled = true
 text = "Options"
 __meta__ = {
@@ -99,10 +99,10 @@ __meta__ = {
 }
 
 [node name="ButtonHoverAudio" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 4 )
+stream = ExtResource( 5 )
 
 [node name="ButtonPressAudio" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 3 )
+stream = ExtResource( 4 )
 [connection signal="focus_entered" from="VBoxContainer2/Play1PButton" to="." method="_on_Button_focus_entered"]
 [connection signal="mouse_entered" from="VBoxContainer2/Play1PButton" to="." method="_on_Button_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer2/Play1PButton" to="." method="_on_Play1PButton_pressed"]

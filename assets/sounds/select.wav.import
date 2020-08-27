@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/paddle_bounce.wav-f59a4e5e82c10e40232a7691789b2952.sample"
+path="res://.import/select.wav-5c513b8003f93446e91f1963597d7cd6.sample"
 
 [deps]
 
-source_file="res://sounds/paddle_bounce.wav"
-dest_files=[ "res://.import/paddle_bounce.wav-f59a4e5e82c10e40232a7691789b2952.sample" ]
+source_file="res://assets/sounds/select.wav"
+dest_files=[ "res://.import/select.wav-5c513b8003f93446e91f1963597d7cd6.sample" ]
 
 [params]
 

@@ -12,37 +12,37 @@ _global_script_classes=[ {
 "base": "KinematicBody2D",
 "class": "Ball",
 "language": "GDScript",
-"path": "res://Ball.gd"
+"path": "res://scenes/ball/Ball.gd"
 }, {
 "base": "Node2D",
 "class": "Game",
 "language": "GDScript",
-"path": "res://Game.gd"
+"path": "res://scenes/game/Game.gd"
 }, {
 "base": "Area2D",
 "class": "Goal",
 "language": "GDScript",
-"path": "res://Goal.gd"
+"path": "res://scenes/goal/Goal.gd"
 }, {
-"base": "MarginContainer",
+"base": "Reference",
 "class": "MainMenu",
 "language": "GDScript",
-"path": "res://MainMenu.gd"
+"path": "res://scenes/main_menu/MainMenu.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Paddle",
 "language": "GDScript",
-"path": "res://Paddle.gd"
+"path": "res://scenes/paddle/Paddle.gd"
 }, {
 "base": "Label",
 "class": "Ready",
 "language": "GDScript",
-"path": "res://Ready.gd"
+"path": "res://scenes/ready/Ready.gd"
 }, {
 "base": "Node2D",
 "class": "ScoreBoard",
 "language": "GDScript",
-"path": "res://ScoreBoard.gd"
+"path": "res://scenes/score_board/ScoreBoard.gd"
 }, {
 "base": "Line2D",
 "class": "Trail2D",
@@ -52,7 +52,7 @@ _global_script_classes=[ {
 "base": "CanvasLayer",
 "class": "WinScreen",
 "language": "GDScript",
-"path": "res://WinScreen.gd"
+"path": "res://scenes/win_screen/WinScreen.gd"
 } ]
 _global_script_class_icons={
 "Ball": "",
@@ -69,13 +69,13 @@ _global_script_class_icons={
 [application]
 
 config/name="pong"
-run/main_scene="res://MainMenu.tscn"
+run/main_scene="res://scenes/main_menu/MainMenu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
-GameColor="*res://autoload/GameColor.tscn"
-GameSetting="*res://autoload/GameSetting.tscn"
+GameColor="*res://autoload/game_color/GameColor.tscn"
+GameSetting="*res://autoload/game_setting/GameSetting.tscn"
 
 [debug]
 

@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/victory.wav-f74952015a40a26575b1b8d070790a37.sample"
+path="res://.import/start.wav-8f8c36035b21c8bef95e2773405e391d.sample"
 
 [deps]
 
-source_file="res://sounds/victory.wav"
-dest_files=[ "res://.import/victory.wav-f74952015a40a26575b1b8d070790a37.sample" ]
+source_file="res://assets/sounds/start.wav"
+dest_files=[ "res://.import/start.wav-8f8c36035b21c8bef95e2773405e391d.sample" ]
 
 [params]
 

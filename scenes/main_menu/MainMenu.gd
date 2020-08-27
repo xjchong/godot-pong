@@ -2,7 +2,7 @@ class_name MainMenu
 extends MarginContainer
 
 
-const GAME_SCENE_PATH = "res://Game.tscn"
+const GAME_SCENE_PATH = "res://scenes/game/Game.tscn"
 
 onready var _play_1p_button: Button = $VBoxContainer2/Play1PButton
 onready var _play_2p_button: Button = $VBoxContainer2/Play2PButton
