@@ -14,16 +14,12 @@ func show(player_id: int):
 	winner_dialog.get_close_button().hide()
 	blur_out_animation.play("BlurOutAnimation")
 	win_audio.play()
+	yield(blur_out_animation, "animation_finished")
+	winner_dialog.show()
 
 
 func _on_AcceptDialog_confirmed():
 	confirm_audio.play()
-	
-
-func _on_AnimationPlayer_animation_finished(_anim_name):
-	winner_dialog.show()
-
-
-func _on_ConfirmAudio_finished():
+	yield(confirm_audio, "finished")
 	get_tree().paused = false
-	get_tree().change_scene("res://MainMenu.tscn")
+	get_tree().change_scene("res://scenes/main_menu/MainMenu.tscn")

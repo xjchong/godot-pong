@@ -115,4 +115,3 @@ stream = ExtResource( 4 )
 [connection signal="focus_entered" from="VBoxContainer2/OptionsButton" to="." method="_on_Button_focus_entered"]
 [connection signal="mouse_entered" from="VBoxContainer2/OptionsButton" to="." method="_on_Button_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer2/OptionsButton" to="." method="_on_OptionsButton_pressed"]
-[connection signal="finished" from="ButtonPressAudio" to="." method="_on_ButtonPressAudio_finished"]

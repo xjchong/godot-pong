@@ -83,6 +83,4 @@ stream = ExtResource( 4 )
 
 [node name="ConfirmAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
-[connection signal="animation_finished" from="ColorRect/BlurOutAnimation" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="confirmed" from="ColorRect/CenterContainer/WinnerDialog" to="." method="_on_AcceptDialog_confirmed"]
-[connection signal="finished" from="ConfirmAudio" to="." method="_on_ConfirmAudio_finished"]
