@@ -5,9 +5,9 @@ extends Node2D
 signal new_game()
 signal match_won(player_id)
 
-const GAME_POINT_THRESHOLD = 1
+const GAME_POINT_THRESHOLD = 10
 const GAME_WIN_MARGIN = 2
-const MATCH_POINT_THRESHOLD = 1
+const MATCH_POINT_THRESHOLD = 2
 
 var p1_game_score: int = 0
 var p2_game_score: int = 0

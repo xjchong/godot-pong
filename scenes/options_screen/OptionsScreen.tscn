@@ -1,0 +1,43 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://theme/Main.tres" type="Theme" id=1]
+[ext_resource path="res://scenes/crt_layer/CRTLayer.tscn" type="PackedScene" id=2]
+
+[node name="OptionsScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_right = 800.0
+margin_bottom = 500.0
+custom_constants/margin_right = 50
+custom_constants/margin_top = 50
+custom_constants/margin_left = 50
+custom_constants/margin_bottom = 50
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OptionsVbox" type="VBoxContainer" parent="MarginContainer"]
+margin_left = 50.0
+margin_top = 50.0
+margin_right = 750.0
+margin_bottom = 450.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/OptionsVbox"]
+margin_right = 700.0
+margin_bottom = 40.0
+
+[node name="SoundOption" type="CheckButton" parent="MarginContainer/OptionsVbox/HBoxContainer"]
+margin_left = 221.0
+margin_right = 479.0
+margin_bottom = 40.0
+size_flags_horizontal = 6
+theme = ExtResource( 1 )
+custom_constants/hseparation = 50
+text = "Sound"
+
+[node name="CRTLayer" parent="." instance=ExtResource( 2 )]
