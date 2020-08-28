@@ -76,6 +76,8 @@ config/icon="res://icon.png"
 
 GameColor="*res://autoload/game_color/GameColor.tscn"
 GameSetting="*res://autoload/game_setting/GameSetting.tscn"
+AudioManager="*res://autoload/audio_manager.gd"
+Audio="*res://autoload/audio.gd"
 
 [debug]
 

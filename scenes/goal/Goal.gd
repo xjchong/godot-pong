@@ -12,4 +12,4 @@ onready var goal_audio: AudioStreamPlayer = $GoalAudio
 func _on_Area2D_body_entered(body):
 	if body.is_in_group("ball"):
 		emit_signal("goal_scored", player_id)
-		goal_audio.play()
+		AudioManager.play(Audio.GOAL)

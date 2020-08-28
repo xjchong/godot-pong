@@ -5,7 +5,6 @@ extends Label
 var is_ready: bool = false
 
 onready var animation_player: AnimationPlayer = $AnimationPlayer
-onready var ready_audio: AudioStreamPlayer = $ReadyAudio
 
 
 func _ready():
@@ -18,7 +17,7 @@ func toggle(should_play_sound: bool = true):
 	is_ready = !is_ready
 	
 	if should_play_sound:
-		ready_audio.play()
+		AudioManager.play(Audio.READY)
 	
 
 func confirm():

@@ -1,10 +1,8 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/main_menu/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/GravityBold8.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://theme/Main.tres" type="Theme" id=3]
-[ext_resource path="res://assets/sounds/paddle_bounce.wav" type="AudioStream" id=4]
-[ext_resource path="res://assets/sounds/wall_bounce.wav" type="AudioStream" id=5]
 [ext_resource path="res://scenes/crt_layer/CRTLayer.tscn" type="PackedScene" id=6]
 
 [sub_resource type="DynamicFont" id=1]
@@ -98,12 +96,6 @@ text = "Options"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="ButtonHoverAudio" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 5 )
-
-[node name="ButtonPressAudio" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 4 )
 
 [node name="CRTLayer" parent="." instance=ExtResource( 6 )]
 [connection signal="focus_entered" from="VBoxContainer2/Play1PButton" to="." method="_on_Button_focus_entered"]

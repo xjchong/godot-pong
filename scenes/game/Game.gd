@@ -15,8 +15,6 @@ onready var p2_paddle: Paddle = $Player2Paddle
 onready var score_board: ScoreBoard = $CanvasLayer/ScoreBoard
 onready var p1_ready: Ready = $Player1Ready
 onready var p2_ready: Ready = $Player2Ready
-onready var start_audio: AudioStreamPlayer = $StartAudio
-onready var game_win_audio: AudioStreamPlayer = $GameWinAudio
 onready var win_screen: WinScreen = $WinScreen
 
 
@@ -64,7 +62,7 @@ func _on_Goal_goal_scored(player_id):
 	
 
 func _on_ScoreBoard_new_game():
-	game_win_audio.play()
+	AudioManager.play(Audio.GAME_WIN)
 	
 	
 func _on_ScoreBoard_match_won(player_id: int):
@@ -77,7 +75,7 @@ func _start_round():
 	p2_ready.confirm()
 	is_game_running = true
 	ball.start()
-	start_audio.play()
+	AudioManager.play(Audio.GAME_START)
 
 
 func _new_game():

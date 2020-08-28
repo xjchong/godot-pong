@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/start.wav-8f8c36035b21c8bef95e2773405e391d.sample"
+path="res://.import/focus.wav-b5ffa669e03a6f28e2958254dc8a0a4b.sample"
 
 [deps]
 
-source_file="res://assets/sounds/start.wav"
-dest_files=[ "res://.import/start.wav-8f8c36035b21c8bef95e2773405e391d.sample" ]
+source_file="res://assets/sounds/focus.wav"
+dest_files=[ "res://.import/focus.wav-b5ffa669e03a6f28e2958254dc8a0a4b.sample" ]
 
 [params]
 
