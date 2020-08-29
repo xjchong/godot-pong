@@ -91,7 +91,6 @@ margin_right = 280.0
 margin_bottom = 360.0
 focus_neighbour_bottom = NodePath("../Play1PButton")
 theme = ExtResource( 3 )
-disabled = true
 text = "Options"
 __meta__ = {
 "_edit_use_anchors_": false

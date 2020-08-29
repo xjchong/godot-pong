@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/main_menu/MainMenu.gd"
 }, {
+"base": "Control",
+"class": "OptionsScreen",
+"language": "GDScript",
+"path": "res://scenes/options_screen/OptionsScreen.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Paddle",
 "language": "GDScript",
@@ -59,6 +64,7 @@ _global_script_class_icons={
 "Game": "",
 "Goal": "",
 "MainMenu": "",
+"OptionsScreen": "",
 "Paddle": "",
 "Ready": "",
 "ScoreBoard": "",
@@ -78,6 +84,7 @@ GameColor="*res://autoload/game_color/GameColor.tscn"
 GameSetting="*res://autoload/game_setting/GameSetting.tscn"
 AudioManager="*res://autoload/audio_manager.gd"
 Audio="*res://autoload/audio.gd"
+GlobalPath="*res://autoload/global_path.gd"
 
 [debug]
 

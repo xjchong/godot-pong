@@ -22,4 +22,4 @@ func _on_AcceptDialog_confirmed():
 	confirm_audio.play()
 	yield(confirm_audio, "finished")
 	get_tree().paused = false
-	get_tree().change_scene("res://scenes/main_menu/MainMenu.tscn")
+	get_tree().change_scene(GlobalPath.MAIN_MENU)

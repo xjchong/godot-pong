@@ -2,8 +2,6 @@ class_name MainMenu
 extends MarginContainer
 
 
-const GAME_SCENE_PATH = "res://scenes/game/Game.tscn"
-
 onready var _play_1p_button: Button = $VBoxContainer2/Play1PButton
 onready var _play_2p_button: Button = $VBoxContainer2/Play2PButton
 onready var _options_button: Button = $VBoxContainer2/OptionsButton
@@ -32,14 +30,15 @@ func _on_Button_focus_entered():
 func _on_Play1PButton_pressed():
 	AudioManager.play(Audio.PRESS)
 	GameSetting.is_against_ai = true
-	get_tree().change_scene(GAME_SCENE_PATH)
+	get_tree().change_scene(GlobalPath.GAME)
 
 
 func _on_Play2PButton_pressed():
 	AudioManager.play(Audio.PRESS)
 	GameSetting.is_against_ai = false
-	get_tree().change_scene(GAME_SCENE_PATH)
+	get_tree().change_scene(GlobalPath.GAME)
 
 
 func _on_OptionsButton_pressed():
 	AudioManager.play(Audio.PRESS)
+	get_tree().change_scene(GlobalPath.OPTIONS)
