@@ -33,6 +33,10 @@ func _ready() -> void:
 
 	
 func _process(_delta):	
+	if (not is_game_running and is_game_ready
+			and p1_ready.is_ready and p2_ready.is_ready):
+		_start_round()
+		
 	if Input.is_action_pressed("player_1_up"):
 		p1_paddle.move_up()
 	elif Input.is_action_pressed("player_1_down"):
@@ -48,16 +52,13 @@ func _process(_delta):
 	
 	
 func _unhandled_input(event):
-	if is_game_running or not is_game_ready:
+	if is_game_running:
 		return
 
 	if event.is_action_released("player_1_ready"):
 		p1_ready.toggle()
 	elif event.is_action_released("player_2_ready"):
 		p2_ready.toggle()
-		
-	if p1_ready.is_ready and p2_ready.is_ready:
-		_start_round()
 		
 
 func _on_Goal_goal_scored(player_id):
@@ -90,7 +91,6 @@ func _new_game():
 	
 	is_game_running = false
 	is_game_ready = false
-	
 	yield(ball, "reset_finished")
 	is_game_ready = true
 	
