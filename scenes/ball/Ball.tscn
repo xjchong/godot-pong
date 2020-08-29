@@ -5,8 +5,6 @@
 [ext_resource path="res://assets/sounds/paddle_bounce.wav" type="AudioStream" id=3]
 [ext_resource path="res://addons/Trail/trail_2d.gd" type="Script" id=4]
 
-
-
 [sub_resource type="CircleShape2D" id=1]
 radius = 8.0
 

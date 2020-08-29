@@ -29,7 +29,7 @@ func _ready():
 		audio_player.bus = SOUND_EFFECTS_BUS
 		
 		
-func _process(delta):
+func _process(_delta):
 	if _queue.empty() or _available_audio_players.empty():
 		return
 		
