@@ -88,10 +88,10 @@ config/icon="res://icon.png"
 
 GameColor="*res://autoload/game_color/GameColor.tscn"
 GameSetting="*res://autoload/game_setting/GameSetting.tscn"
-AudioManager="*res://autoload/audio_manager.gd"
-Audio="*res://autoload/audio.gd"
-GlobalPath="*res://autoload/global_path.gd"
-SettingsManager="*res://autoload/settings_manager.gd"
+Audio="*res://autoload/Audio.gd"
+GlobalPath="*res://autoload/GlobalPath.gd"
+SettingsManager="*res://autoload/SettingsManager.gd"
+AudioManager="*res://autoload/audio_manager/AudioManager.tscn"
 
 [debug]
 

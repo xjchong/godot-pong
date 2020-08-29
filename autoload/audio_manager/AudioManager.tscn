@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://autoload/audio_manager/AudioManager.gd" type="Script" id=1]
+
+[sub_resource type="Animation" id=1]
+resource_name = "FadeOutVolume"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3.99 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -80.0 ]
+}
+
+[node name="Node" type="Node"]
+script = ExtResource( 1 )
+
+[node name="BackgroundAudio" type="AudioStreamPlayer" parent="."]
+bus = "Background"
+
+[node name="BackgroundVolumeAnimation" type="AnimationPlayer" parent="BackgroundAudio"]
+anims/FadeOutVolume = SubResource( 1 )

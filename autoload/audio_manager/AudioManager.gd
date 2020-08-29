@@ -5,9 +5,12 @@ const MAX_PLAYERS: int = 8
 const MASTER_BUS: String = "master"
 const BACKGROUND_BUS: String = "background"
 
-var _background_audio_player := AudioStreamPlayer.new()
 var _available_audio_players = []
 var _queue = []
+
+onready var _background_audio_player := $BackgroundAudio
+onready var _background_volume_animation: AnimationPlayer = \
+		$BackgroundAudio/BackgroundVolumeAnimation
 
 
 func _ready():
@@ -18,9 +21,6 @@ func _ready():
 		_available_audio_players.append(audio_player)
 		audio_player.connect("finished", self, "_on_stream_finished", [audio_player])
 		audio_player.bus = MASTER_BUS
-		
-	add_child(_background_audio_player)
-	_background_audio_player.bus = BACKGROUND_BUS
 		
 		
 func _process(delta):
@@ -53,4 +53,6 @@ func start_loop(sound_path: String):
 	
 func end_loop():
 	if _background_audio_player.playing:
+		_background_volume_animation.play("FadeOutVolume")
+		yield(_background_volume_animation, "animation_finished")
 		_background_audio_player.stop()
