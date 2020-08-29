@@ -33,3 +33,8 @@ func _on_MenuMusicSlider_value_changed(new_value: float):
 	SettingsManager.save_setting("menu_music", "volume_percent", new_value)
 	AudioManager.update_volume(AudioManager.Bus.BACKGROUND, new_value)
 	
+
+func _on_SoundEffectsSlider_value_changed(new_value):
+	SettingsManager.save_setting("sound_effects", "volume_percent", new_value)
+	AudioManager.update_volume(AudioManager.Bus.SOUND_EFFECTS, new_value)
+	AudioManager.play(Audio.GAME_START)
