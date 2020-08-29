@@ -1,10 +1,7 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://theme/Main.tres" type="Theme" id=1]
 [ext_resource path="res://scenes/win_screen/WinScreen.gd" type="Script" id=2]
-[ext_resource path="res://assets/sounds/paddle_bounce.wav" type="AudioStream" id=3]
-[ext_resource path="res://assets/sounds/wall_bounce.wav" type="AudioStream" id=4]
-[ext_resource path="res://assets/sounds/victory.wav" type="AudioStream" id=5]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -73,14 +70,4 @@ dialog_text = "Player 1 Wins!
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="WinAudio" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 5 )
-volume_db = -4.489
-
-[node name="HoverAudio" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 4 )
-
-[node name="ConfirmAudio" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 3 )
 [connection signal="confirmed" from="ColorRect/CenterContainer/WinnerDialog" to="." method="_on_AcceptDialog_confirmed"]
