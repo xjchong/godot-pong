@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/main_menu/MainMenu.gd"
 }, {
+"base": "HSplitContainer",
+"class": "OptionSlider",
+"language": "GDScript",
+"path": "res://scenes/option_slider/OptionSlider.gd"
+}, {
 "base": "Control",
 "class": "OptionsScreen",
 "language": "GDScript",
@@ -70,6 +75,7 @@ _global_script_class_icons={
 "Game": "",
 "Goal": "",
 "MainMenu": "",
+"OptionSlider": "",
 "OptionsScreen": "",
 "Paddle": "",
 "Ready": "",

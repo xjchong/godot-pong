@@ -9,4 +9,6 @@ func _ready():
 	update_effect()
 	
 func update_effect():
-	crt_effect.visible = SettingsManager.load_setting("crt", "is_enabled")
+	crt_effect.visible = SettingsManager.load_setting(
+		"crt", "is_enabled", true
+	)

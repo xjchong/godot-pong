@@ -1,25 +1,32 @@
 extends Node
 
 
+enum Bus { MASTER, BACKGROUND, SOUND_EFFECTS }
+
+
+const DEFAULT_VOLUME_PERCENT = 0.7
 const MAX_PLAYERS: int = 8
-const MASTER_BUS: String = "master"
 const BACKGROUND_BUS: String = "background"
+const SOUND_EFFECTS_BUS: String = "sound_effects"
 
 var _available_audio_players = []
 var _queue = []
 
 onready var _background_audio_player := $BackgroundAudio
-onready var _background_volume_tween: Tween = $BackgroundAudio/BackgroundVolumeTween
+onready var _background_volume_tween: Tween = \
+		$BackgroundAudio/BackgroundVolumeTween
 
 
 func _ready():
+	_load_volume_settings()
+	
 	for i in MAX_PLAYERS:
 		var audio_player := AudioStreamPlayer.new()
 		
 		add_child(audio_player)
 		_available_audio_players.append(audio_player)
 		audio_player.connect("finished", self, "_on_stream_finished", [audio_player])
-		audio_player.bus = MASTER_BUS
+		audio_player.bus = SOUND_EFFECTS_BUS
 		
 		
 func _process(delta):
@@ -59,3 +66,28 @@ func end_loop():
 		_background_volume_tween.start()
 		yield(_background_volume_tween, "tween_completed")
 		_background_audio_player.stop()
+		
+		
+func update_volume(bus: int, volume_percent: float):
+	AudioServer.set_bus_volume_db(bus, linear2db(volume_percent))
+
+
+func _load_volume_settings():
+	var background_volume_percent = SettingsManager.load_setting(
+		"menu_music", "volume_percent", DEFAULT_VOLUME_PERCENT
+	)
+	
+	var sound_effects_volume_percent = SettingsManager.load_setting(
+		"sound_effects", "volume_percent", DEFAULT_VOLUME_PERCENT
+	)
+	
+	AudioServer.set_bus_volume_db(
+		Bus.BACKGROUND, 
+		linear2db(background_volume_percent)
+	)
+	
+	AudioServer.set_bus_volume_db(
+		Bus.SOUND_EFFECTS, 
+		linear2db(sound_effects_volume_percent)
+	)
+	

@@ -18,5 +18,5 @@ func save_setting(section: String, key: String, value):
 	config.save(CONFIG_PATH)
 	
 
-func load_setting(section: String, key: String):
-	return config.get_value(section, key)
+func load_setting(section: String, key: String, default_value):
+	return config.get_value(section, key, default_value)
