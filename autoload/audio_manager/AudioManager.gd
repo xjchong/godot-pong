@@ -9,8 +9,7 @@ var _available_audio_players = []
 var _queue = []
 
 onready var _background_audio_player := $BackgroundAudio
-onready var _background_volume_animation: AnimationPlayer = \
-		$BackgroundAudio/BackgroundVolumeAnimation
+onready var _background_volume_tween: Tween = $BackgroundAudio/BackgroundVolumeTween
 
 
 func _ready():
@@ -53,6 +52,10 @@ func start_loop(sound_path: String):
 	
 func end_loop():
 	if _background_audio_player.playing:
-		_background_volume_animation.play("FadeOutVolume")
-		yield(_background_volume_animation, "animation_finished")
+		_background_volume_tween.interpolate_property(
+			_background_audio_player, "volume_db", 
+			_background_audio_player.volume_db, -80, 4.0
+		)
+		_background_volume_tween.start()
+		yield(_background_volume_tween, "tween_completed")
 		_background_audio_player.stop()
