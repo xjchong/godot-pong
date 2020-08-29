@@ -30,6 +30,10 @@ func _on_HSlider_focus_entered():
 		
 	AudioManager.play(Audio.FOCUS)
 	_label_focus()
+	
+
+func _on_HSlider_focus_exited():
+	_label_unfocus()
 
 
 func _on_HSplitContainer_mouse_entered():
@@ -44,6 +48,14 @@ func _on_HSplitContainer_mouse_exited():
 func set_value(new_value: int):
 	_slider.value = clamp(new_value, MIN_VALUE, MAX_VALUE)
 	emit_signal("value_changed", float(_slider.value) / 100.0)
+
+
+func grab_focus():
+	_slider.grab_focus()	
+	
+	
+func has_focus() -> bool:
+	return _slider.has_focus()
 	
 	
 func _label_focus():
@@ -52,5 +64,4 @@ func _label_focus():
 
 func _label_unfocus():
 	_label.add_color_override("font_color", GameColor.FOREGROUND)
-	
 	
