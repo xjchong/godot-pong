@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/ball/Ball.gd" type="Script" id=1]
 [ext_resource path="res://assets/sounds/wall_bounce.wav" type="AudioStream" id=2]
@@ -26,6 +26,34 @@ color_ramp = SubResource( 3 )
 
 [sub_resource type="Gradient" id=5]
 colors = PoolColorArray( 0.992157, 0.960784, 0.890196, 0, 0.992157, 0.960784, 0.890196, 0.243137 )
+
+[sub_resource type="Animation" id=6]
+resource_name = "Reset"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 4.28709, 1 ),
+"update": 0,
+"values": [ Vector2( 3, 3 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Polygon2D:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 4.28709, 1 ),
+"update": 0,
+"values": [ Color( 0.992157, 0.960784, 0.890196, 0 ), Color( 0.992157, 0.960784, 0.890196, 1 ) ]
+}
 
 [node name="Ball" type="KinematicBody2D"]
 script = ExtResource( 1 )
@@ -58,3 +86,6 @@ width = 16.0
 default_color = Color( 0.992157, 0.960784, 0.890196, 1 )
 gradient = SubResource( 5 )
 script = ExtResource( 4 )
+
+[node name="ResetAnimation" type="AnimationPlayer" parent="."]
+anims/Reset = SubResource( 6 )

@@ -6,6 +6,7 @@ export var is_against_ai: bool
 
 var screen_size: Vector2
 var is_game_running: bool = false
+var is_game_ready: bool = false
 var _ai_dest_pos: Vector2
 var _ai_start_pos: Vector2
 
@@ -21,10 +22,14 @@ onready var win_screen: WinScreen = $WinScreen
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
 	set_process(true)
-	is_against_ai = GameSetting.is_against_ai
 	
+	yield(ball, "reset_finished")
+	
+	is_against_ai = GameSetting.is_against_ai
 	if is_against_ai:
 		_reset_ai()
+		
+	is_game_ready = true
 
 	
 func _process(_delta):	
@@ -33,7 +38,7 @@ func _process(_delta):
 	elif Input.is_action_pressed("player_1_down"):
 		p1_paddle.move_down()
 	
-	if is_against_ai:
+	if is_against_ai and is_game_ready and is_game_running:
 		_handle_ai()
 	else:
 		if Input.is_action_pressed("player_2_up"):
@@ -43,7 +48,7 @@ func _process(_delta):
 	
 	
 func _unhandled_input(event):
-	if is_game_running:
+	if is_game_running or not is_game_ready:
 		return
 
 	if event.is_action_released("player_1_ready"):
@@ -79,10 +84,15 @@ func _start_round():
 
 
 func _new_game():
-	ball.reset()
 	p1_paddle.reset()
 	p2_paddle.reset()
+	ball.reset()
+	
 	is_game_running = false
+	is_game_ready = false
+	
+	yield(ball, "reset_finished")
+	is_game_ready = true
 	
 	if is_against_ai:
 		_reset_ai()
@@ -91,7 +101,7 @@ func _new_game():
 func _reset_ai():
 	p2_paddle.torque_growth = 0.2
 	p2_paddle.torque_decay = 0.05
-	p2_ready.toggle(false)
+	p2_ready.toggle()
 	_ai_start_pos = p2_paddle.position
 	_ai_dest_pos = p2_paddle.position
 

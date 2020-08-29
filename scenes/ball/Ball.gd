@@ -2,6 +2,8 @@ class_name Ball
 extends KinematicBody2D
 
 
+signal reset_finished()
+
 const DEFAULT_VELOCITY: float = 400.0
 const MAX_VELOCITY: float = 2000.0
 
@@ -27,10 +29,12 @@ var velocity: Vector2 = Vector2()
 onready var motion_trail: Trail2D = $MotionTrail
 onready var paddle_bounce_audio: AudioStreamPlayer = $PaddleBounceAudio
 onready var wall_bounce_audio: AudioStreamPlayer = $WallBounceAudio
+onready var reset_animation: AnimationPlayer = $ResetAnimation
 
-
-func _init():
+	
+func _ready():
 	randomize()
+	reset()
 
 
 func start():
@@ -45,6 +49,11 @@ func reset():
 	velocity = Vector2()
 	_base_velocity = Vector2()
 	_torque = 0.0
+
+	reset_animation.play("Reset")
+	yield(reset_animation, "animation_finished")
+	emit_signal("reset_finished")
+	
 
 func _physics_process(delta):
 	var collision: KinematicCollision2D = move_and_collide(velocity * delta)
