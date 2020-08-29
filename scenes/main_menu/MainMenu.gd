@@ -7,6 +7,10 @@ onready var _play_2p_button: Button = $VBoxContainer2/Play2PButton
 onready var _options_button: Button = $VBoxContainer2/OptionsButton
 
 
+func _ready():
+	AudioManager.start_loop(Audio.MAIN_MENU_MUSIC)
+
+
 func _unhandled_key_input(_event):
 	if _play_1p_button.has_focus() \
 			or _play_2p_button.has_focus() \
@@ -30,15 +34,20 @@ func _on_Button_focus_entered():
 func _on_Play1PButton_pressed():
 	AudioManager.play(Audio.PRESS)
 	GameSetting.is_against_ai = true
-	get_tree().change_scene(GlobalPath.GAME)
+	_change_scene_to_game()
 
 
 func _on_Play2PButton_pressed():
 	AudioManager.play(Audio.PRESS)
 	GameSetting.is_against_ai = false
-	get_tree().change_scene(GlobalPath.GAME)
+	_change_scene_to_game()
 
 
 func _on_OptionsButton_pressed():
 	AudioManager.play(Audio.PRESS)
 	get_tree().change_scene(GlobalPath.OPTIONS)
+	
+	
+func _change_scene_to_game():
+	AudioManager.end_loop()
+	get_tree().change_scene(GlobalPath.GAME)
