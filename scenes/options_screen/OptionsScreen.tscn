@@ -105,4 +105,5 @@ custom_fonts/font = SubResource( 1 )
 text = "<-Back"
 
 [node name="CRTLayer" parent="." instance=ExtResource( 2 )]
+[connection signal="pressed" from="MarginContainer/VSplitContainer/OptionsVbox/CRTOption" to="." method="_on_CRTOption_pressed"]
 [connection signal="pressed" from="MarginContainer/VSplitContainer/BackButton" to="." method="_on_BackButton_pressed"]
