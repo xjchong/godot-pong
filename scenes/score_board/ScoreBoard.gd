@@ -2,13 +2,15 @@ class_name ScoreBoard
 extends Node2D
 
 
+const DEFAULT_DEUCE_MARGIN = 2
+
 signal new_game()
 signal match_won(player_id)
 
 var game_points = 10
 var match_games = 2
 var is_deuce_enabled: bool
-var deuce_margin = 2
+var deuce_margin = DEFAULT_DEUCE_MARGIN
 
 var p1_game_score: int = 0
 var p2_game_score: int = 0
@@ -27,6 +29,9 @@ func _ready():
 	game_points = SettingsManager.load_setting(section, "game_points", 11)
 	match_games = SettingsManager.load_setting(section, "match_games", 3)
 	is_deuce_enabled = SettingsManager.load_setting(section, "is_deuce_enabled", true)
+	
+	if is_deuce_enabled:
+		deuce_margin = 0
 	
 	_update_labels()
 
