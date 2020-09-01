@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/game/Game.gd"
 }, {
+"base": "MarginContainer",
+"class": "GameSetup",
+"language": "GDScript",
+"path": "res://scenes/game_setup/GameSetup.gd"
+}, {
 "base": "Area2D",
 "class": "Goal",
 "language": "GDScript",
@@ -38,6 +43,11 @@ _global_script_classes=[ {
 "class": "OptionSlider",
 "language": "GDScript",
 "path": "res://scenes/option_slider/OptionSlider.gd"
+}, {
+"base": "HBoxContainer",
+"class": "OptionSpinbox",
+"language": "GDScript",
+"path": "res://scenes/option_spinbox/OptionSpinbox.gd"
 }, {
 "base": "Control",
 "class": "OptionsScreen",
@@ -73,9 +83,11 @@ _global_script_class_icons={
 "Ball": "",
 "CRTLayer": "",
 "Game": "",
+"GameSetup": "",
 "Goal": "",
 "MainMenu": "",
 "OptionSlider": "",
+"OptionSpinbox": "",
 "OptionsScreen": "",
 "Paddle": "",
 "Ready": "",

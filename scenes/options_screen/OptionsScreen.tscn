@@ -1,15 +1,12 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://theme/Main.tres" type="Theme" id=1]
 [ext_resource path="res://scenes/crt_layer/CRTLayer.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/fonts/GravityRegular5.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://scenes/back_button/BackButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/options_screen/OptionsScreen.gd" type="Script" id=4]
 [ext_resource path="res://scenes/option_slider/OptionSlider.tscn" type="PackedScene" id=5]
 
-[sub_resource type="StyleBoxEmpty" id=2]
-
-[sub_resource type="DynamicFont" id=1]
-font_data = ExtResource( 3 )
+[sub_resource type="StyleBoxEmpty" id=1]
 
 [node name="OptionsScreen" type="Control"]
 anchor_right = 1.0
@@ -59,19 +56,11 @@ margin_right = 500.0
 margin_bottom = 120.0
 size_flags_horizontal = 3
 theme = ExtResource( 1 )
-custom_styles/hover_pressed = SubResource( 2 )
+custom_styles/hover_pressed = SubResource( 1 )
 action_mode = 0
 text = "CRT EFFECT"
 
-[node name="BackButton" type="Button" parent="MarginContainer/VSplitContainer"]
-margin_top = 382.0
-margin_right = 90.0
-margin_bottom = 398.0
-focus_neighbour_bottom = NodePath("../OptionsVbox/SoundEffectsSlider")
-size_flags_horizontal = 0
-size_flags_vertical = 0
-custom_fonts/font = SubResource( 1 )
-text = "<-Back"
+[node name="BackButton" parent="MarginContainer/VSplitContainer" instance=ExtResource( 3 )]
 
 [node name="CRTLayer" parent="." instance=ExtResource( 2 )]
 [connection signal="value_changed" from="MarginContainer/VSplitContainer/OptionsVbox/SoundEffectsSlider" to="." method="_on_SoundEffectsSlider_value_changed"]
@@ -79,6 +68,4 @@ text = "<-Back"
 [connection signal="focus_entered" from="MarginContainer/VSplitContainer/OptionsVbox/CRTOption" to="." method="_on_option_focus"]
 [connection signal="mouse_entered" from="MarginContainer/VSplitContainer/OptionsVbox/CRTOption" to="." method="_on_option_focus"]
 [connection signal="pressed" from="MarginContainer/VSplitContainer/OptionsVbox/CRTOption" to="." method="_on_CRTOption_pressed"]
-[connection signal="focus_entered" from="MarginContainer/VSplitContainer/BackButton" to="." method="_on_option_focus"]
-[connection signal="mouse_entered" from="MarginContainer/VSplitContainer/BackButton" to="." method="_on_option_focus"]
 [connection signal="pressed" from="MarginContainer/VSplitContainer/BackButton" to="." method="_on_BackButton_pressed"]

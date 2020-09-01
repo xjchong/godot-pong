@@ -49,16 +49,18 @@ func play(sound_path: String):
 
 func start_loop(sound_path: String):
 	var audio_resource = load(sound_path)
-	
+
 	if _background_audio_player.stream == audio_resource:
 		return
-		
+
 	_background_audio_player.stream = audio_resource
 	_background_audio_player.play()
 	
 	
 func end_loop():
 	if _background_audio_player.playing:
+		var current_volume_db = _background_audio_player.volume_db
+		
 		_background_volume_tween.interpolate_property(
 			_background_audio_player, "volume_db", 
 			_background_audio_player.volume_db, -80, 4.0
@@ -66,6 +68,8 @@ func end_loop():
 		_background_volume_tween.start()
 		yield(_background_volume_tween, "tween_completed")
 		_background_audio_player.stop()
+		_background_audio_player.stream = null
+		_background_audio_player.volume_db = current_volume_db
 		
 		
 func update_volume(bus: int, volume_percent: float):

@@ -34,13 +34,13 @@ func _on_Button_focus_entered():
 func _on_Play1PButton_pressed():
 	AudioManager.play(Audio.PRESS)
 	GameSetting.is_against_ai = true
-	_change_scene_to_game()
+	_change_scene_to_game_setup()
 
 
 func _on_Play2PButton_pressed():
 	AudioManager.play(Audio.PRESS)
 	GameSetting.is_against_ai = false
-	_change_scene_to_game()
+	_change_scene_to_game_setup()
 
 
 func _on_OptionsButton_pressed():
@@ -48,6 +48,5 @@ func _on_OptionsButton_pressed():
 	get_tree().change_scene(GlobalPath.OPTIONS)
 	
 	
-func _change_scene_to_game():
-	AudioManager.end_loop()
-	get_tree().change_scene(GlobalPath.GAME)
+func _change_scene_to_game_setup():
+	get_tree().change_scene(GlobalPath.GAME_SETUP)
