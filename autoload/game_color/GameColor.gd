@@ -14,7 +14,7 @@ export var BACKGROUND_YELLOW = Color("dd9a25")
 const FOREGROUND: Color = Color("fdf5e3")
 const FOCUS: Color = Color("b7fdf5e3")
 
-const DEFAULT_THEME_INDEX = 6
+const DEFAULT_THEME_INDEX = 7
 
 var color_themes = [
 	BACKGROUND_BLACK,
