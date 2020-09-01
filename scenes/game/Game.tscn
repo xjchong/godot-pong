@@ -44,15 +44,15 @@ position = Vector2( 816, 0 )
 player_id = 2
 
 [node name="Player1Ready" parent="." instance=ExtResource( 8 )]
-margin_left = 328.0
+margin_left = 320.0
 margin_top = 96.0
-margin_right = 395.0
+margin_right = 387.0
 margin_bottom = 108.0
 
 [node name="Player2Ready" parent="." instance=ExtResource( 8 )]
-margin_left = 424.0
+margin_left = 416.0
 margin_top = 96.0
-margin_right = 491.0
+margin_right = 483.0
 margin_bottom = 108.0
 
 [node name="WinScreen" parent="." instance=ExtResource( 10 )]
@@ -61,6 +61,12 @@ margin_bottom = 108.0
 layer = 2
 
 [node name="ScoreBoard" parent="CanvasLayer" instance=ExtResource( 7 )]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -176.0
+margin_top = 20.0
+margin_right = 174.0
+margin_bottom = 84.0
 
 [node name="CRTLayer" parent="." instance=ExtResource( 11 )]
 

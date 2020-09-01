@@ -1,5 +1,5 @@
 class_name ScoreBoard
-extends Node2D
+extends VBoxContainer
 
 
 const DEFAULT_DEUCE_MARGIN = 2
@@ -17,10 +17,12 @@ var p2_game_score: int = 0
 var p1_match_score: int = 0
 var p2_match_score: int = 0
 
-onready var p1_game_score_label: Label = $Player1GameScore
-onready var p2_game_score_label: Label = $Player2GameScore
-onready var p1_match_score_label: Label = $Player1MatchScore
-onready var p2_match_score_label: Label = $Player2MatchScore
+onready var game_points_label: Label = $GamePointsLabel
+onready var match_games_label: Label = $MatchGamesLabel
+onready var p1_game_score_label: Label = $HBoxContainer/HBoxContainer/Player1GameScore
+onready var p1_match_score_label: Label = $HBoxContainer/HBoxContainer/Player1MatchScore
+onready var p2_game_score_label: Label = $HBoxContainer/HBoxContainer2/Player2GameScore
+onready var p2_match_score_label: Label = $HBoxContainer/HBoxContainer2/Player2MatchScore
 
 
 func _ready():
@@ -37,6 +39,8 @@ func _ready():
 
 
 func _update_labels():
+	game_points_label.text = "%d point game" % game_points
+	match_games_label.text = "First to %d" % match_games
 	p1_game_score_label.text = String(p1_game_score)
 	p2_game_score_label.text = String(p2_game_score)
 	p1_match_score_label.text = String(p1_match_score)

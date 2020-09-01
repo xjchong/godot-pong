@@ -64,7 +64,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/ready/Ready.gd"
 }, {
-"base": "Node2D",
+"base": "VBoxContainer",
 "class": "ScoreBoard",
 "language": "GDScript",
 "path": "res://scenes/score_board/ScoreBoard.gd"
