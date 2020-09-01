@@ -65,10 +65,12 @@ align = 1
 valign = 1
 
 [node name="Play1PButton" type="Button" parent="VBoxContainer2"]
+margin_left = 150.0
 margin_top = 224.0
-margin_right = 488.0
+margin_right = 338.0
 margin_bottom = 256.0
 focus_neighbour_top = NodePath("../OptionsButton")
+size_flags_horizontal = 4
 theme = ExtResource( 3 )
 text = "Play 1P"
 __meta__ = {
@@ -76,9 +78,11 @@ __meta__ = {
 }
 
 [node name="Play2PButton" type="Button" parent="VBoxContainer2"]
+margin_left = 150.0
 margin_top = 276.0
-margin_right = 488.0
+margin_right = 338.0
 margin_bottom = 308.0
+size_flags_horizontal = 4
 theme = ExtResource( 3 )
 text = "Play 2P"
 __meta__ = {
@@ -86,10 +90,12 @@ __meta__ = {
 }
 
 [node name="OptionsButton" type="Button" parent="VBoxContainer2"]
+margin_left = 142.0
 margin_top = 328.0
-margin_right = 488.0
+margin_right = 346.0
 margin_bottom = 360.0
 focus_neighbour_bottom = NodePath("../Play1PButton")
+size_flags_horizontal = 4
 theme = ExtResource( 3 )
 text = "Options"
 __meta__ = {
