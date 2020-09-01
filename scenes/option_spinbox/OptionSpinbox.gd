@@ -21,6 +21,7 @@ func value_set(new_value):
 	value = new_value
 	hidden_slider.value = new_value
 
+
 func _ready():
 	title_label.text = title
 	

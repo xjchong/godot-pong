@@ -6,8 +6,12 @@ onready var blur_out_animation: AnimationPlayer = $ColorRect/BlurOutAnimation
 onready var winner_dialog: WindowDialog = $ColorRect/CenterContainer/WinnerDialog
 
 
-func show(player_id: int):
-	winner_dialog.dialog_text = "Player %s wins!" % player_id
+func show(player_id):
+	if player_id == null:
+		winner_dialog.dialog_text = "      Draw!"
+	else:
+		winner_dialog.dialog_text = "Player %s wins!" % player_id
+		
 	winner_dialog.get_close_button().hide()
 	blur_out_animation.play("BlurOutAnimation")
 	AudioManager.play(Audio.VICTORY)

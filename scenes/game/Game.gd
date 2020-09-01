@@ -98,6 +98,11 @@ func _on_ScoreBoard_match_won(player_id: int):
 	get_tree().paused = true
 	win_screen.show(player_id)
 	
+
+func _on_ScoreBoard_match_drawn():
+	get_tree().paused = true
+	win_screen.show(null)
+	
 	
 func _start_round():
 	p1_ready.confirm()

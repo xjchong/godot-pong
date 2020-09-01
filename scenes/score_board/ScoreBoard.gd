@@ -6,6 +6,7 @@ const DEFAULT_DEUCE_MARGIN = 2
 
 signal new_game()
 signal match_won(player_id)
+signal match_drawn()
 
 var game_points = 10
 var match_games = 2
@@ -40,7 +41,7 @@ func _ready():
 
 func _update_labels():
 	game_points_label.text = "%d point game" % game_points
-	match_games_label.text = "First to %d" % match_games
+	match_games_label.text = "Best of %d" % match_games
 	p1_game_score_label.text = String(p1_game_score)
 	p2_game_score_label.text = String(p2_game_score)
 	p1_match_score_label.text = String(p1_match_score)
@@ -77,10 +78,12 @@ func _end_game():
 	p1_game_score = 0
 	p2_game_score = 0
 	
-	if p1_match_score >= match_games:
+	if p1_match_score > match_games / 2:
 		emit_signal("match_won", 1)
-	elif p2_match_score >= match_games:
+	elif p2_match_score > match_games / 2:
 		emit_signal("match_won", 2)
+	elif p1_match_score + p2_match_score == match_games:
+		emit_signal("match_drawn")
 	else:
 		emit_signal("new_game")
 	
