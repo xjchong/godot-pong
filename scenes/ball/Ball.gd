@@ -66,42 +66,10 @@ func _physics_process(delta):
 	var collider = collision.get_collider()
 
 	if collider.is_in_group("paddle"):
-		if _base_velocity.x < 0:
-			_base_velocity.x -= ACCELERATION_CONSTANT
-		else:
-			_base_velocity.x += ACCELERATION_CONSTANT
-		
-		_base_velocity.y = velocity.y
-		_base_velocity.x *= -1
-		_base_velocity.x = clamp(_base_velocity.x, -MAX_VELOCITY, MAX_VELOCITY)
-		
-		var paddle: Paddle = collider
-		var next_torque = paddle.get_torque(position, _base_velocity, _torque)
-		var next_velocity = paddle.get_velocity(position, _base_velocity, _torque)
-		
-		next_velocity.x = clamp(next_velocity.x, -MAX_VELOCITY, MAX_VELOCITY)
-		
-		velocity = next_velocity
-		_torque = next_torque
-		
-		if !paddle_bounce_audio.playing: 
-			paddle_bounce_audio.play()
-	elif collider.is_in_group("wall"):	
-		var is_topspin = (
-				velocity.x > 0 and velocity.y < 0 and _torque < 0 or
-				velocity.x > 0 and velocity.y > 0 and _torque > 0 or
-				velocity.x < 0 and velocity.y < 0 and _torque > 0 or
-				velocity.x < 0 and velocity.y > 0 and _torque < 0)
-		
-		if is_topspin:
-			var transfer = (abs(_torque) / MAX_TORQUE) * MAX_TORQUE_TRANSFER
-			
-			velocity.x *= (1.0 + transfer)
-			
-		velocity.y *= -SURFACE_FRICTION
-			
-		_torque = lerp(_torque, 0.0, SURFACE_FRICTION)
-		wall_bounce_audio.play()
+		_handle_paddle_collision(collider)
+	elif collider.is_in_group("wall"):
+		_handle_wall_collision()
+
 
 func _apply_torque():
 	var rotation = _torque / MAX_TORQUE * 50
@@ -120,4 +88,43 @@ func _apply_torque():
 		velocity.y -= torque_velocity
 
 	rotation_degrees = rotation_degrees + rotation
+	
+	
+func _handle_paddle_collision(paddle: Paddle):
+	if _base_velocity.x < 0:
+		_base_velocity.x -= ACCELERATION_CONSTANT
+	else:
+		_base_velocity.x += ACCELERATION_CONSTANT
+		
+	_base_velocity.y = velocity.y
+	_base_velocity.x *= -1
+	_base_velocity.x = clamp(_base_velocity.x, -MAX_VELOCITY, MAX_VELOCITY)
+	
+	var next_torque = paddle.get_torque(position, _base_velocity, _torque)
+	var next_velocity = paddle.get_velocity(position, _base_velocity, _torque)
+	
+	next_velocity.x = clamp(next_velocity.x, -MAX_VELOCITY, MAX_VELOCITY)
+	
+	velocity = next_velocity
+	_torque = next_torque
+	
+	if !paddle_bounce_audio.playing: 
+		paddle_bounce_audio.play()
+
+func _handle_wall_collision():
+	var is_topspin = (
+		velocity.x > 0 and velocity.y < 0 and _torque < 0 or
+		velocity.x > 0 and velocity.y > 0 and _torque > 0 or
+		velocity.x < 0 and velocity.y < 0 and _torque > 0 or
+		velocity.x < 0 and velocity.y > 0 and _torque < 0)
+		
+	if is_topspin:
+		var transfer = (abs(_torque) / MAX_TORQUE) * MAX_TORQUE_TRANSFER
+		
+		velocity.x *= (1.0 + transfer)
+		
+	velocity.y *= -SURFACE_FRICTION
+		
+	_torque = lerp(_torque, 0.0, SURFACE_FRICTION)
+	wall_bounce_audio.play()
 	
