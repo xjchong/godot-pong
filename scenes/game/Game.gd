@@ -64,7 +64,7 @@ func _unhandled_input(event):
 		
 		
 func _on_Ball_collision(impact_percent):
-	if impact_percent > 0.45:
+	if impact_percent > 0.50:
 		if SettingsManager.load_setting("screen_shake", "is_enabled", true):	
 			var max_impact_delay = 0.08
 			var max_duration = 0.2
