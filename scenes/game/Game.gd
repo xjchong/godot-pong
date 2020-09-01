@@ -65,18 +65,21 @@ func _unhandled_input(event):
 		
 func _on_Ball_collision(impact_percent):
 	if impact_percent > 0.45:
-		var max_impact_delay = 0.08
-		var max_duration = 0.2
-		var max_frequency = 24
-		var max_amplitude = 8
-
-		impact_timer.start(max_impact_delay * impact_percent)
-		get_tree().paused = true
-
-		screen_shake.start(
-			max_duration,
-			max_frequency,
-			max_amplitude * impact_percent)
+		if SettingsManager.load_setting("screen_shake", "is_enabled", true):	
+			var max_impact_delay = 0.08
+			var max_duration = 0.2
+			var max_frequency = 24
+			var max_amplitude = 8
+	
+			impact_timer.start(max_impact_delay * impact_percent)
+			get_tree().paused = true
+	
+			screen_shake.start(
+				max_duration,
+				max_frequency,
+				max_amplitude * impact_percent)
+		else:
+			AudioManager.play(Audio.PADDLE_BOUNCE_HIGH)
 	else:
 		AudioManager.play(Audio.PADDLE_BOUNCE)
 	
