@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://theme/Main.tres" type="Theme" id=1]
 [ext_resource path="res://scenes/crt_layer/CRTLayer.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/back_button/BackButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/options_screen/OptionsScreen.gd" type="Script" id=4]
 [ext_resource path="res://scenes/option_slider/OptionSlider.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/option_spinbox/OptionSpinbox.tscn" type="PackedScene" id=6]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -70,6 +71,12 @@ custom_styles/hover_pressed = SubResource( 1 )
 action_mode = 0
 text = "Screen shake"
 
+[node name="ColorThemeOption" parent="MarginContainer/VSplitContainer/OptionsVbox" instance=ExtResource( 6 )]
+margin_top = 176.0
+margin_bottom = 208.0
+title = "Color Theme"
+max_value = 9
+
 [node name="BackButton" parent="MarginContainer/VSplitContainer" instance=ExtResource( 3 )]
 margin_top = 384.0
 margin_bottom = 400.0
@@ -83,4 +90,5 @@ margin_bottom = 400.0
 [connection signal="focus_entered" from="MarginContainer/VSplitContainer/OptionsVbox/ScreenShakeOption" to="." method="_on_option_focus"]
 [connection signal="mouse_entered" from="MarginContainer/VSplitContainer/OptionsVbox/ScreenShakeOption" to="." method="_on_option_focus"]
 [connection signal="pressed" from="MarginContainer/VSplitContainer/OptionsVbox/ScreenShakeOption" to="." method="_on_ScreenShakeOption_pressed"]
+[connection signal="value_changed" from="MarginContainer/VSplitContainer/OptionsVbox/ColorThemeOption" to="." method="_on_ColorThemeOption_value_changed"]
 [connection signal="pressed" from="MarginContainer/VSplitContainer/BackButton" to="." method="_on_BackButton_pressed"]

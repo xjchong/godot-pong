@@ -7,6 +7,7 @@ onready var sound_effects_option: OptionSlider = $MarginContainer/VSplitContaine
 onready var menu_music_option: OptionSlider = $MarginContainer/VSplitContainer/OptionsVbox/MenuMusicSlider
 onready var crt_option: CheckButton = $MarginContainer/VSplitContainer/OptionsVbox/CRTOption 
 onready var screen_shake_option: CheckButton = $MarginContainer/VSplitContainer/OptionsVbox/ScreenShakeOption
+onready var color_theme_option: OptionSpinbox = $MarginContainer/VSplitContainer/OptionsVbox/ColorThemeOption
 onready var back_button: Button = $MarginContainer/VSplitContainer/BackButton
 
 var _is_ready = false
@@ -21,8 +22,14 @@ func _ready():
 	) * 100)
 	
 	crt_option.pressed = SettingsManager.load_setting("crt", "is_enabled", true)
+	
 	screen_shake_option.pressed = SettingsManager.load_setting(
 		"screen_shake", "is_enabled", true
+	)
+	
+	color_theme_option.max_value = GameColor.color_themes.size() - 1
+	color_theme_option.value = SettingsManager.load_setting(
+		"color_theme", "index", GameColor.DEFAULT_THEME_INDEX
 	)
 	
 	_is_ready = true
@@ -78,3 +85,8 @@ func _on_SoundEffectsSlider_value_changed(new_value):
 	SettingsManager.save_setting("sound_effects", "volume_percent", new_value)
 	AudioManager.update_volume(AudioManager.Bus.SOUND_EFFECTS, new_value)
 	AudioManager.play(Audio.GAME_START)
+
+
+func _on_ColorThemeOption_value_changed(new_value):
+	SettingsManager.save_setting("color_theme", "index", new_value)
+	GameColor.update_color_theme(new_value)

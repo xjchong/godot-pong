@@ -2,6 +2,5 @@
 
 [ext_resource path="res://autoload/game_setting/GameSetting.gd" type="Script" id=1]
 
-
 [node name="GameSetting" type="Node"]
 script = ExtResource( 1 )

@@ -8,6 +8,11 @@ onready var _options_button: Button = $VBoxContainer2/OptionsButton
 
 
 func _ready():
+	var color_theme_index = SettingsManager.load_setting(
+		"color_theme", "index", GameColor.DEFAULT_THEME_INDEX
+	)
+	
+	GameColor.update_color_theme(color_theme_index)
 	AudioManager.start_loop(Audio.MAIN_MENU_MUSIC)
 
 
