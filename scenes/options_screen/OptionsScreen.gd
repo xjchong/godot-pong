@@ -43,6 +43,8 @@ func _unhandled_key_input(_event):
 			or sound_effects_option.has_focus() 
 			or menu_music_option.has_focus()
 			or crt_option.has_focus()
+			or screen_shake_option.has_focus()
+			or color_theme_option.has_focus()
 			or back_button.has_focus()):
 		return
 		
@@ -62,11 +64,13 @@ func _on_BackButton_pressed():
 
 
 func _on_CRTOption_pressed():
+	AudioManager.play(Audio.PRESS)
 	SettingsManager.save_setting("crt", "is_enabled", crt_option.pressed)
 	crt_layer.update_effect()
 	
 
 func _on_ScreenShakeOption_pressed():
+	AudioManager.play(Audio.PRESS)
 	SettingsManager.save_setting("screen_shake", "is_enabled", screen_shake_option.pressed)
 	
 
@@ -88,5 +92,9 @@ func _on_SoundEffectsSlider_value_changed(new_value):
 
 
 func _on_ColorThemeOption_value_changed(new_value):
+	if not _is_ready:
+		return
+		
+	AudioManager.play(Audio.PRESS)
 	SettingsManager.save_setting("color_theme", "index", new_value)
 	GameColor.update_color_theme(new_value)

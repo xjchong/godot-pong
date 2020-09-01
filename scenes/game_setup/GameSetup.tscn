@@ -98,8 +98,13 @@ focus_neighbour_right = NodePath(".")
 size_flags_horizontal = 10
 text = "Play"
 align = 2
+[connection signal="focus_entered" from="VSplitContainer/VBoxContainer/GamePointsOption" to="." method="_on_option_focus"]
 [connection signal="value_changed" from="VSplitContainer/VBoxContainer/GamePointsOption" to="." method="_on_GamePointsOption_value_changed"]
+[connection signal="focus_entered" from="VSplitContainer/VBoxContainer/MatchGamesOption" to="." method="_on_option_focus"]
 [connection signal="value_changed" from="VSplitContainer/VBoxContainer/MatchGamesOption" to="." method="_on_MatchGamesOption_value_changed"]
+[connection signal="focus_entered" from="VSplitContainer/VBoxContainer/DeuceOption" to="." method="_on_option_focus"]
 [connection signal="toggled" from="VSplitContainer/VBoxContainer/DeuceOption" to="." method="_on_DeuceOption_toggled"]
+[connection signal="focus_entered" from="VSplitContainer/HBoxContainer3/BackButton" to="." method="_on_option_focus"]
 [connection signal="pressed" from="VSplitContainer/HBoxContainer3/BackButton" to="." method="_on_BackButton_pressed"]
+[connection signal="focus_entered" from="VSplitContainer/HBoxContainer3/PlayButton" to="." method="_on_option_focus"]
 [connection signal="pressed" from="VSplitContainer/HBoxContainer3/PlayButton" to="." method="_on_PlayButton_pressed"]

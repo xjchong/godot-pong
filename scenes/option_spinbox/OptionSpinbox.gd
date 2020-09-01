@@ -15,6 +15,8 @@ onready var plus_button: Button = $PlusButton
 onready var hidden_slider: HSlider = $HiddenSlider
 	
 export var value: int = 0 setget value_set
+
+
 func value_set(new_value):
 	value = new_value
 	hidden_slider.value = new_value
@@ -32,16 +34,18 @@ func _process(_delta):
 	if not has_focus():
 		return
 
-	if Input.is_action_pressed("ui_left"):
-		_focus_control(minus_button)
-		_unfocus_control(plus_button)
-	elif Input.is_action_pressed("ui_right"):
-		_focus_control(plus_button)
-		_unfocus_control(minus_button)
-	else:
-		_unfocus_control(minus_button)
-		_unfocus_control(plus_button)
-		
+	
+	minus_button.pressed = Input.is_action_pressed("ui_left")
+	plus_button.pressed = Input.is_action_pressed("ui_right")
+	
+	minus_button.add_color_override("font_color", 
+		GameColor.FOCUS if Input.is_action_pressed("ui_left") else GameColor.FOREGROUND
+	)
+	
+	plus_button.add_color_override("font_color", 
+		GameColor.FOCUS if Input.is_action_pressed("ui_right") else GameColor.FOREGROUND
+	)
+
 	
 func _on_HboxContainer_mouse_entered():
 	_focus_control(title_label)
@@ -51,7 +55,7 @@ func _on_HboxContainer_mouse_exited():
 	_unfocus_control(title_label)
 	
 
-func _on_HiddenSlider_focus_entered():
+func _on_HiddenSlider_focus_entered():		
 	_focus_control(title_label)
 	
 	
@@ -81,6 +85,7 @@ func grab_focus():
 	
 	
 func _focus_control(control):
+	emit_signal("focus_entered")
 	control.add_color_override("font_color", GameColor.FOCUS)
 	
 

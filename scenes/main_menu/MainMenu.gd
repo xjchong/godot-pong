@@ -27,6 +27,7 @@ func _unhandled_key_input(_event):
 
 func _on_Button_mouse_entered():
 	AudioManager.play(Audio.FOCUS)
+	pass
 
 
 func _on_Button_focus_entered():

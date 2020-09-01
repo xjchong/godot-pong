@@ -16,6 +16,8 @@ var game_points: int
 var match_games: int
 var is_deuce_enabled: bool
 
+var _is_ready := false
+
 
 func _ready():
 	is_against_ai = GameSetting.is_against_ai
@@ -29,6 +31,8 @@ func _ready():
 	game_points_option.value = game_points
 	match_games_option.value = match_games
 	deuce_option.pressed = is_deuce_enabled
+	
+	_is_ready = true
 
 
 func _unhandled_key_input(_event):
@@ -41,20 +45,37 @@ func _unhandled_key_input(_event):
 
 	game_points_option.grab_focus()
 	
+	
+func _on_option_focus():
+	if Input.is_mouse_button_pressed(1):
+		return
+		
+	AudioManager.play(Audio.FOCUS)
+	
 
 func _on_GamePointsOption_value_changed(new_value):
 	game_points = new_value
 
-
+	if _is_ready:
+		AudioManager.play(Audio.PRESS)
+		
+		
 func _on_MatchGamesOption_value_changed(new_value):
 	match_games = new_value
+	
+	if _is_ready:
+		AudioManager.play(Audio.PRESS)
 
 
 func _on_DeuceOption_toggled(button_pressed):
 	is_deuce_enabled = button_pressed
+	
+	if _is_ready:
+		AudioManager.play(Audio.PRESS)
 
 
 func _on_BackButton_pressed():
+	AudioManager.play(Audio.PRESS)
 	get_tree().change_scene(GlobalPath.MAIN_MENU)
 
 
@@ -62,6 +83,7 @@ func _on_PlayButton_pressed():
 	SettingsManager.save_setting(section, "game_points", game_points)
 	SettingsManager.save_setting(section, "match_games", match_games)
 	SettingsManager.save_setting(section, "is_deuce_enabled", is_deuce_enabled)
-		
+	
+	AudioManager.play(Audio.PRESS)
 	AudioManager.end_loop()
 	get_tree().change_scene(GlobalPath.GAME)
