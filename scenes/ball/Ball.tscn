@@ -1,8 +1,6 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scenes/ball/Ball.gd" type="Script" id=1]
-[ext_resource path="res://assets/sounds/wall_bounce.wav" type="AudioStream" id=2]
-[ext_resource path="res://assets/sounds/paddle_bounce.wav" type="AudioStream" id=3]
 [ext_resource path="res://addons/Trail/trail_2d.gd" type="Script" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
@@ -73,12 +71,6 @@ lifetime = 15.0
 speed_scale = 15.0
 local_coords = false
 process_material = SubResource( 4 )
-
-[node name="PaddleBounceAudio" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 3 )
-
-[node name="WallBounceAudio" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 2 )
 
 [node name="MotionTrail" type="Line2D" parent="."]
 points = PoolVector2Array( 144, -24 )

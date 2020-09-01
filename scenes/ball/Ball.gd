@@ -28,8 +28,6 @@ var _base_velocity: Vector2 = Vector2()
 var velocity: Vector2 = Vector2()
 
 onready var motion_trail: Trail2D = $MotionTrail
-onready var paddle_bounce_audio: AudioStreamPlayer = $PaddleBounceAudio
-onready var wall_bounce_audio: AudioStreamPlayer = $WallBounceAudio
 onready var reset_animation: AnimationPlayer = $ResetAnimation
 
 	
@@ -71,7 +69,7 @@ func _physics_process(delta):
 		impact_percent = _handle_paddle_collision(collider)
 		emit_signal("collision", impact_percent)	
 	elif collider.is_in_group("wall"):
-		impact_percent = _handle_wall_collision()
+		_handle_wall_collision()
 		
 
 func _apply_torque():

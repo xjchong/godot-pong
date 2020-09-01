@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/paddle_bounce_high.wav-40f913b1905f112c5df5f05dbcd71aaf.sample"
+
+[deps]
+
+source_file="res://assets/sounds/paddle_bounce_high.wav"
+dest_files=[ "res://.import/paddle_bounce_high.wav-40f913b1905f112c5df5f05dbcd71aaf.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

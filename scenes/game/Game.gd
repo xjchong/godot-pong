@@ -68,7 +68,7 @@ func _on_Ball_collision(impact_percent):
 		var max_impact_delay = 0.08
 		var max_duration = 0.2
 		var max_frequency = 24
-		var max_amplitude = 16
+		var max_amplitude = 8
 
 		impact_timer.start(max_impact_delay * impact_percent)
 		get_tree().paused = true
@@ -157,4 +157,4 @@ func _handle_ai():
 
 func _on_ImpactTimer_timeout():
 	get_tree().paused = false
-	AudioManager.play(Audio.PADDLE_BOUNCE)
+	AudioManager.play(Audio.PADDLE_BOUNCE_HIGH)
