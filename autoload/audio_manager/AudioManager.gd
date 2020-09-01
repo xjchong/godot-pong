@@ -18,6 +18,7 @@ onready var _background_volume_tween: Tween = \
 
 
 func _ready():
+	pause_mode = Node.PAUSE_MODE_PROCESS
 	_load_volume_settings()
 	
 	for i in MAX_PLAYERS:

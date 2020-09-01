@@ -11,6 +11,8 @@ var _ai_dest_pos: Vector2
 var _ai_start_pos: Vector2
 
 onready var ball: Ball = $Ball
+onready var screen_shake: ScreenShake = $Camera2D/ScreenShake
+onready var impact_timer: Timer = $ImpactTimer
 onready var p1_paddle: Paddle = $Player1Paddle
 onready var p2_paddle: Paddle = $Player2Paddle
 onready var score_board: ScoreBoard = $CanvasLayer/ScoreBoard
@@ -60,6 +62,24 @@ func _unhandled_input(event):
 	elif event.is_action_released("player_2_ready"):
 		p2_ready.toggle()
 		
+		
+func _on_Ball_collision(impact_percent):
+	if impact_percent > 0.45:
+		var max_impact_delay = 0.08
+		var max_duration = 0.2
+		var max_frequency = 24
+		var max_amplitude = 16
+
+		impact_timer.start(max_impact_delay * impact_percent)
+		get_tree().paused = true
+
+		screen_shake.start(
+			max_duration,
+			max_frequency,
+			max_amplitude * impact_percent)
+	else:
+		AudioManager.play(Audio.PADDLE_BOUNCE)
+	
 
 func _on_Goal_goal_scored(player_id):
 	score_board.score(player_id)
@@ -133,3 +153,8 @@ func _handle_ai():
 			p2_paddle.move_down()
 		elif _ai_dest_pos.y < current_pos.y:
 			p2_paddle.move_up()
+
+
+func _on_ImpactTimer_timeout():
+	get_tree().paused = false
+	AudioManager.play(Audio.PADDLE_BOUNCE)

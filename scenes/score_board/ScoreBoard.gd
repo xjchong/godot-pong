@@ -30,7 +30,7 @@ func _ready():
 	match_games = SettingsManager.load_setting(section, "match_games", 3)
 	is_deuce_enabled = SettingsManager.load_setting(section, "is_deuce_enabled", true)
 	
-	if is_deuce_enabled:
+	if not is_deuce_enabled:
 		deuce_margin = 0
 	
 	_update_labels()

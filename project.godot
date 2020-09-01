@@ -69,6 +69,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/score_board/ScoreBoard.gd"
 }, {
+"base": "Node",
+"class": "ScreenShake",
+"language": "GDScript",
+"path": "res://scenes/screen_shake/ScreenShake.gd"
+}, {
 "base": "Line2D",
 "class": "Trail2D",
 "language": "GDScript",
@@ -92,6 +97,7 @@ _global_script_class_icons={
 "Paddle": "",
 "Ready": "",
 "ScoreBoard": "",
+"ScreenShake": "",
 "Trail2D": "",
 "WinScreen": ""
 }

@@ -3,6 +3,7 @@ extends KinematicBody2D
 
 
 signal reset_finished()
+signal collision(impact_percent)
 
 const DEFAULT_VELOCITY: float = 400.0
 const MAX_VELOCITY: float = 2000.0
@@ -64,12 +65,14 @@ func _physics_process(delta):
 		return
 		
 	var collider = collision.get_collider()
+	var impact_percent = 0.0
 
 	if collider.is_in_group("paddle"):
-		_handle_paddle_collision(collider)
+		impact_percent = _handle_paddle_collision(collider)
+		emit_signal("collision", impact_percent)	
 	elif collider.is_in_group("wall"):
-		_handle_wall_collision()
-
+		impact_percent = _handle_wall_collision()
+		
 
 func _apply_torque():
 	var rotation = _torque / MAX_TORQUE * 50
@@ -90,7 +93,7 @@ func _apply_torque():
 	rotation_degrees = rotation_degrees + rotation
 	
 	
-func _handle_paddle_collision(paddle: Paddle):
+func _handle_paddle_collision(paddle: Paddle) -> float:
 	if _base_velocity.x < 0:
 		_base_velocity.x -= ACCELERATION_CONSTANT
 	else:
@@ -107,11 +110,10 @@ func _handle_paddle_collision(paddle: Paddle):
 	
 	velocity = next_velocity
 	_torque = next_torque
-	
-	if !paddle_bounce_audio.playing: 
-		paddle_bounce_audio.play()
+		
+	return abs(velocity.x / MAX_VELOCITY)
 
-func _handle_wall_collision():
+func _handle_wall_collision() -> float:
 	var is_topspin = (
 		velocity.x > 0 and velocity.y < 0 and _torque < 0 or
 		velocity.x > 0 and velocity.y > 0 and _torque > 0 or
@@ -126,5 +128,7 @@ func _handle_wall_collision():
 	velocity.y *= -SURFACE_FRICTION
 		
 	_torque = lerp(_torque, 0.0, SURFACE_FRICTION)
-	wall_bounce_audio.play()
+	AudioManager.play(Audio.WALL_BOUNCE)
+	
+	return abs(velocity.x / MAX_VELOCITY)
 	

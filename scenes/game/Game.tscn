@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/paddle/Paddle.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/game/Game.gd" type="Script" id=2]
 [ext_resource path="res://scenes/ball/Ball.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/wall/Wall.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/goal/Goal.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/screen_shake/ScreenShake.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/score_board/ScoreBoard.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/ready/Ready.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/win_screen/WinScreen.tscn" type="PackedScene" id=10]
@@ -62,7 +63,19 @@ layer = 2
 [node name="ScoreBoard" parent="CanvasLayer" instance=ExtResource( 7 )]
 
 [node name="CRTLayer" parent="." instance=ExtResource( 11 )]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+current = true
+
+[node name="ScreenShake" parent="Camera2D" instance=ExtResource( 6 )]
+
+[node name="ImpactTimer" type="Timer" parent="."]
+pause_mode = 2
+one_shot = true
+[connection signal="collision" from="Ball" to="." method="_on_Ball_collision"]
 [connection signal="goal_scored" from="Player1Goal" to="." method="_on_Goal_goal_scored"]
 [connection signal="goal_scored" from="Player2Goal" to="." method="_on_Goal_goal_scored"]
 [connection signal="match_won" from="CanvasLayer/ScoreBoard" to="." method="_on_ScoreBoard_match_won"]
 [connection signal="new_game" from="CanvasLayer/ScoreBoard" to="." method="_on_ScoreBoard_new_game"]
+[connection signal="timeout" from="ImpactTimer" to="." method="_on_ImpactTimer_timeout"]
