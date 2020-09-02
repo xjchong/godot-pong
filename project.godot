@@ -126,7 +126,7 @@ GameColor="*res://autoload/game_color/GameColor.tscn"
 GameSetting="*res://autoload/game_setting/GameSetting.tscn"
 Audio="*res://autoload/Audio.gd"
 GlobalPath="*res://autoload/GlobalPath.gd"
-SettingsManager="*res://autoload/SettingsManager.gd"
+SettingsManager="*res://autoload/settings_manager/SettingsManager.gd"
 AudioManager="*res://autoload/audio_manager/AudioManager.tscn"
 
 [debug]

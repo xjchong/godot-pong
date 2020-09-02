@@ -85,9 +85,9 @@ func _on_BackButton_pressed():
 
 
 func _on_PlayButton_pressed():
-	SettingsManager.save_setting(section, "game_points", game_points)
-	SettingsManager.save_setting(section, "match_games", match_games)
-	SettingsManager.save_setting(section, "is_deuce_enabled", is_deuce_enabled)
+	SettingsManager.save_setting(self,section, "game_points", game_points)
+	SettingsManager.save_setting(self,section, "match_games", match_games)
+	SettingsManager.save_setting(self,section, "is_deuce_enabled", is_deuce_enabled)
 	
 	AudioManager.play(Audio.PRESS)
 	AudioManager.end_loop()

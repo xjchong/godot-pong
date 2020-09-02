@@ -8,6 +8,7 @@ onready var player_2_hints: VBoxContainer = $Player2Hints
 
 func _ready():
 	player_2_hints.visible = !GameSetting.is_against_ai
+	SettingsManager.connect("settings_saved", self, "_on_settings_saved")
 	update_visibility()
 	
 	
@@ -28,5 +29,12 @@ func update_visibility():
 	
 
 func _on_HideHintsButton_pressed():
-	SettingsManager.save_setting("hints", "is_enabled", false)
+	SettingsManager.save_setting(self, "hints", "is_enabled", false)
+	update_visibility()
+	
+	
+func _on_settings_saved(emitter):
+	if self == emitter:
+		return
+		
 	update_visibility()

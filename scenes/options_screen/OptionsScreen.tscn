@@ -81,6 +81,18 @@ custom_styles/hover_pressed = SubResource( 1 )
 action_mode = 0
 text = "Screen shake"
 
+[node name="HideControlsOption" type="CheckButton" parent="MarginContainer/VSplitContainer/OptionsVbox"]
+margin_top = 216.0
+margin_right = 500.0
+margin_bottom = 256.0
+focus_neighbour_left = NodePath(".")
+focus_neighbour_right = NodePath(".")
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+custom_styles/hover_pressed = SubResource( 1 )
+action_mode = 0
+text = "Hide controls"
+
 [node name="BackButton" parent="MarginContainer/VSplitContainer" instance=ExtResource( 3 )]
 margin_top = 384.0
 margin_bottom = 400.0
@@ -96,5 +108,8 @@ focus_neighbour_right = NodePath(".")
 [connection signal="focus_entered" from="MarginContainer/VSplitContainer/OptionsVbox/ScreenShakeOption" to="." method="_on_option_focus"]
 [connection signal="mouse_entered" from="MarginContainer/VSplitContainer/OptionsVbox/ScreenShakeOption" to="." method="_on_option_focus"]
 [connection signal="pressed" from="MarginContainer/VSplitContainer/OptionsVbox/ScreenShakeOption" to="." method="_on_ScreenShakeOption_pressed"]
+[connection signal="focus_entered" from="MarginContainer/VSplitContainer/OptionsVbox/HideControlsOption" to="." method="_on_option_focus"]
+[connection signal="mouse_entered" from="MarginContainer/VSplitContainer/OptionsVbox/HideControlsOption" to="." method="_on_option_focus"]
+[connection signal="pressed" from="MarginContainer/VSplitContainer/OptionsVbox/HideControlsOption" to="." method="_on_HideControlsOption_pressed"]
 [connection signal="focus_entered" from="MarginContainer/VSplitContainer/BackButton" to="." method="_on_option_focus"]
 [connection signal="pressed" from="MarginContainer/VSplitContainer/BackButton" to="." method="_on_BackButton_pressed"]
