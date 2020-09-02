@@ -6,10 +6,7 @@ const MAX_VELOCITY: float = 15.0
 const MAX_TORQUE: float = 15.0
 const ACCELERATION: float = 0.15
 const DECCELERATION: float = 0.2
-const RUBBER_TACK: float = 15.0 # Max torque applied on hit.
-const RUBBER_SPEED: float = 1.05 # Horizontal hit velocity multipler.
 const BLADE_LENGTH: float = 112.0 # Should equal paddle height in pixels.
-const BLADE_TENSION: float = 0.8 # Horizontal hit velocity multipler on counter.
 const BLADE_CONTROL_DECAY: float = 2.0 # Higher control has less vertical velocity variance.
 const BLADE_CONTROL_MAX_VARIANCE: float = 500.0 # Maximum vertical velocity applied.
 
@@ -17,8 +14,9 @@ export var player_id: int
 export var default_position: Vector2
 
 var velocity: Vector2 = Vector2()
-var torque_growth: float = 0.09
-var torque_decay: float = 1.0
+var blade_tension: float = 0.8 # Horizontal hit velocity multipler on counter.
+var torque_growth: float = 0.1
+var torque_decay: float = 0.7
 var torque: float = 0.0
 var _did_move: bool = false
 
@@ -75,7 +73,7 @@ func get_velocity(hit_position: Vector2, hit_velocity: Vector2, _hit_torque: flo
 	
 	# Calculate counter boost to horizontal velocity.
 	var magnitude_y_delta = abs(next_velocity.y) - abs(hit_velocity.y)
-	var remaining_force = (abs(hit_velocity.y) - magnitude_y_delta) * BLADE_TENSION
+	var remaining_force = (abs(hit_velocity.y) - magnitude_y_delta) * blade_tension
 
 	if remaining_force > 0:
 		if next_velocity.x < 0:

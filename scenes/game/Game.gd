@@ -136,6 +136,7 @@ func _new_game():
 func _reset_ai():
 	p2_paddle.torque_growth = 0.2
 	p2_paddle.torque_decay = 0.05
+	p2_paddle.blade_tension = 0.8
 	p2_ready.toggle()
 	_ai_start_pos = p2_paddle.position
 	_ai_dest_pos = p2_paddle.position
@@ -148,6 +149,7 @@ func _handle_ai():
 	var max_pos_y = 420.0
 	var boredom_chance = 0.08 # Chance of getting distracted.
 	var sleep_chance = 0.5 # Chance of not tracking the ball. 
+	var spike_desire = 0.0
 	var has_reached_dest = (
 		abs(abs(current_pos.y) - abs(_ai_dest_pos.y)) < allowable_distance
 	)
@@ -162,7 +164,19 @@ func _handle_ai():
 		elif ball.velocity.x < 0 and rand_range(0, 1) > sleep_chance:
 			_ai_dest_pos.y = clamp(ball.position.y, min_pos_y, max_pos_y)
 		elif ball.velocity.x > 0:
-			_ai_dest_pos.y = clamp(ball.position.y, min_pos_y, max_pos_y)
+			var next_y = ball.position.y
+			
+			if rand_range(0, 1) < spike_desire:
+				var blade_offset = p2_paddle.BLADE_LENGTH / 2.5
+				
+				next_y += rand_range(-blade_offset, blade_offset)
+				
+				if ball.velocity.y > 0:
+					next_y = ball.position.y + blade_offset
+				elif ball.velocity.y < 0:
+					next_y = ball.position.y - blade_offset
+				
+			_ai_dest_pos.y = clamp(next_y, min_pos_y, max_pos_y)
 	else:
 		if _ai_dest_pos.y > current_pos.y:
 			p2_paddle.move_down()
