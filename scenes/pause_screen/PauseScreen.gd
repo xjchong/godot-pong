@@ -28,6 +28,7 @@ func _unhandled_key_input(event):
 		return
 
 	if (Input.is_action_pressed("ui_cancel")
+			or Input.is_action_just_released("ui_accept")
 			or resume_button.has_focus()
 			or options_button.has_focus()
 			or quit_button.has_focus()):
