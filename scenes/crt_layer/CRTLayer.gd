@@ -16,5 +16,5 @@ func update_effect():
 	)
 	
 	
-func _on_settings_saved(emitter):
+func _on_settings_saved(_emitter):
 	update_effect()
