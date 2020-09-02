@@ -39,7 +39,7 @@ func _ready():
 	_is_ready = true
 	
 	
-func _unhandled_key_input(event):
+func _unhandled_key_input(_event):
 	if not visible:
 		return
 	else:
@@ -108,7 +108,7 @@ func _on_SoundEffectsSlider_value_changed(new_value):
 func _on_ColorThemeOption_value_changed(new_value):
 	if not _is_ready:
 		return
-		
+	
 	AudioManager.play(Audio.PRESS)
 	SettingsManager.save_setting("color_theme", "index", new_value)
 	GameColor.update_color_theme(new_value)

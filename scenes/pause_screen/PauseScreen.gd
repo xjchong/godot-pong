@@ -19,7 +19,7 @@ func _ready():
 	options_screen.should_delegate_back_action = true
 	
 	
-func _unhandled_key_input(event):
+func _unhandled_key_input(_event):
 	if not menu_container.visible:
 		return
 		
@@ -76,11 +76,13 @@ func _on_ResumeButton_pressed():
 	
 	
 func _on_OptionsButton_pressed():
+	AudioManager.play(Audio.PRESS)
 	menu_container.visible = false
 	options_screen.visible = true
 	
 	
 func _on_QuitButton_pressed():
+	AudioManager.play(Audio.PRESS)
 	get_tree().paused = false
 	get_tree().change_scene(GlobalPath.MAIN_MENU)
 	

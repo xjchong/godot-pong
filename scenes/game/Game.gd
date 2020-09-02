@@ -20,6 +20,7 @@ onready var p1_ready: Ready = $Player1Ready
 onready var p2_ready: Ready = $Player2Ready
 onready var win_screen: WinScreen = $WinScreen
 onready var pause_screen: PauseScreen = $PauseScreen
+onready var hints_overlay: HintsOverlay = $HintsOverlay
 
 
 func _ready() -> void:
@@ -113,6 +114,7 @@ func _start_round():
 	p2_ready.confirm()
 	is_game_running = true
 	ball.start()
+	hints_overlay.hide()
 	AudioManager.play(Audio.GAME_START)
 
 
@@ -120,6 +122,7 @@ func _new_game():
 	p1_paddle.reset()
 	p2_paddle.reset()
 	ball.reset()
+	hints_overlay.show()
 	
 	is_game_running = false
 	is_game_ready = false

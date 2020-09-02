@@ -4,7 +4,7 @@
 [ext_resource path="res://scenes/win_screen/WinScreen.gd" type="Script" id=2]
 [ext_resource path="res://assets/shaders/screen_blur.tres" type="Material" id=3]
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=1]
 resource_name = "BlurOutAnimation"
 length = 0.2
 tracks/0/type = "value"
@@ -24,7 +24,8 @@ tracks/0/keys = {
 pause_mode = 2
 script = ExtResource( 2 )
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="BlurRect" type="ColorRect" parent="."]
+visible = false
 material = ExtResource( 3 )
 margin_left = -16.0
 margin_top = -16.0
@@ -34,17 +35,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BlurOutAnimation" type="AnimationPlayer" parent="ColorRect"]
-anims/BlurOutAnimation = SubResource( 3 )
+[node name="BlurOutAnimation" type="AnimationPlayer" parent="BlurRect"]
+anims/BlurOutAnimation = SubResource( 1 )
 
-[node name="CenterContainer" type="CenterContainer" parent="ColorRect"]
+[node name="CenterContainer" type="CenterContainer" parent="BlurRect"]
 margin_right = 800.0
 margin_bottom = 500.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="WinnerDialog" type="AcceptDialog" parent="ColorRect/CenterContainer"]
+[node name="WinnerDialog" type="AcceptDialog" parent="BlurRect/CenterContainer"]
 margin_left = 210.0
 margin_top = 188.0
 margin_right = 590.0
@@ -56,4 +57,4 @@ dialog_text = "Player 1 wins!
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="confirmed" from="ColorRect/CenterContainer/WinnerDialog" to="." method="_on_AcceptDialog_confirmed"]
+[connection signal="confirmed" from="BlurRect/CenterContainer/WinnerDialog" to="." method="_on_AcceptDialog_confirmed"]
