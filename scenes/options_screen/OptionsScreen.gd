@@ -4,7 +4,6 @@ extends Control
 
 signal back_pressed()
 
-onready var crt_layer: CRTLayer = $CRTLayer
 onready var sound_effects_option: OptionSlider = $MarginContainer/VSplitContainer/OptionsVbox/SoundEffectsSlider
 onready var menu_music_option: OptionSlider = $MarginContainer/VSplitContainer/OptionsVbox/MenuMusicSlider
 onready var crt_option: CheckButton = $MarginContainer/VSplitContainer/OptionsVbox/CRTOption 
@@ -39,17 +38,20 @@ func _ready():
 	_is_ready = true
 	
 	
-func _unhandled_key_input(_event):
+func _unhandled_key_input(event):
 	if not visible:
 		return
 	else:
 		accept_event()
+		
+	if event.is_action("ui_select") or event.is_action("ui_accept"):
+		return
 	
-	if Input.is_action_just_released("ui_cancel"):
+	if event.is_action_released("ui_cancel"):
 		_on_BackButton_pressed()
 		return
 		
-	if (Input.is_action_pressed("ui_cancel")
+	if (event.is_action_pressed("ui_cancel")
 			or sound_effects_option.has_focus() 
 			or menu_music_option.has_focus()
 			or crt_option.has_focus()
@@ -64,7 +66,7 @@ func _unhandled_key_input(_event):
 func _on_option_focus():
 	if Input.is_mouse_button_pressed(1):
 		return
-		
+
 	AudioManager.play(Audio.FOCUS)
 
 
@@ -80,7 +82,6 @@ func _on_BackButton_pressed():
 func _on_CRTOption_pressed():
 	AudioManager.play(Audio.PRESS)
 	SettingsManager.save_setting("crt", "is_enabled", crt_option.pressed)
-	crt_layer.update_effect()
 	
 
 func _on_ScreenShakeOption_pressed():

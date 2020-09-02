@@ -2,7 +2,7 @@ class_name Game
 extends Node2D
 
 
-export var is_against_ai: bool
+export var is_against_ai: bool = true
 
 var screen_size: Vector2
 var is_game_running: bool = false
@@ -64,7 +64,7 @@ func _unhandled_input(event):
 
 	if event.is_action_released("player_1_ready"):
 		p1_ready.toggle()
-	elif event.is_action_released("player_2_ready"):
+	elif event.is_action_released("player_2_ready") and not is_against_ai:
 		p2_ready.toggle()
 		
 		

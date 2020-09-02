@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://theme/Main.tres" type="Theme" id=1]
-[ext_resource path="res://scenes/crt_layer/CRTLayer.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/back_button/BackButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/options_screen/OptionsScreen.gd" type="Script" id=4]
 [ext_resource path="res://scenes/option_slider/OptionSlider.tscn" type="PackedScene" id=5]
@@ -52,10 +51,16 @@ title = "Sound FX"
 [node name="MenuMusicSlider" parent="MarginContainer/VSplitContainer/OptionsVbox" instance=ExtResource( 5 )]
 title = "Menu Music"
 
-[node name="CRTOption" type="CheckButton" parent="MarginContainer/VSplitContainer/OptionsVbox"]
+[node name="ColorThemeOption" parent="MarginContainer/VSplitContainer/OptionsVbox" instance=ExtResource( 6 )]
 margin_top = 80.0
+margin_bottom = 112.0
+title = "Color Theme"
+max_value = 9
+
+[node name="CRTOption" type="CheckButton" parent="MarginContainer/VSplitContainer/OptionsVbox"]
+margin_top = 120.0
 margin_right = 500.0
-margin_bottom = 120.0
+margin_bottom = 160.0
 focus_neighbour_left = NodePath(".")
 focus_neighbour_right = NodePath(".")
 size_flags_horizontal = 3
@@ -65,9 +70,9 @@ action_mode = 0
 text = "CRT EFFECT"
 
 [node name="ScreenShakeOption" type="CheckButton" parent="MarginContainer/VSplitContainer/OptionsVbox"]
-margin_top = 128.0
+margin_top = 168.0
 margin_right = 500.0
-margin_bottom = 168.0
+margin_bottom = 208.0
 focus_neighbour_left = NodePath(".")
 focus_neighbour_right = NodePath(".")
 size_flags_horizontal = 3
@@ -76,29 +81,20 @@ custom_styles/hover_pressed = SubResource( 1 )
 action_mode = 0
 text = "Screen shake"
 
-[node name="ColorThemeOption" parent="MarginContainer/VSplitContainer/OptionsVbox" instance=ExtResource( 6 )]
-margin_top = 176.0
-margin_bottom = 208.0
-title = "Color Theme"
-max_value = 9
-
 [node name="BackButton" parent="MarginContainer/VSplitContainer" instance=ExtResource( 3 )]
 margin_top = 384.0
 margin_bottom = 400.0
 focus_neighbour_left = NodePath(".")
-focus_neighbour_top = NodePath("../OptionsVbox/ColorThemeOption")
 focus_neighbour_right = NodePath(".")
-
-[node name="CRTLayer" parent="." instance=ExtResource( 2 )]
 [connection signal="value_changed" from="MarginContainer/VSplitContainer/OptionsVbox/SoundEffectsSlider" to="." method="_on_SoundEffectsSlider_value_changed"]
 [connection signal="value_changed" from="MarginContainer/VSplitContainer/OptionsVbox/MenuMusicSlider" to="." method="_on_MenuMusicSlider_value_changed"]
+[connection signal="focus_entered" from="MarginContainer/VSplitContainer/OptionsVbox/ColorThemeOption" to="." method="_on_option_focus"]
+[connection signal="value_changed" from="MarginContainer/VSplitContainer/OptionsVbox/ColorThemeOption" to="." method="_on_ColorThemeOption_value_changed"]
 [connection signal="focus_entered" from="MarginContainer/VSplitContainer/OptionsVbox/CRTOption" to="." method="_on_option_focus"]
 [connection signal="mouse_entered" from="MarginContainer/VSplitContainer/OptionsVbox/CRTOption" to="." method="_on_option_focus"]
 [connection signal="pressed" from="MarginContainer/VSplitContainer/OptionsVbox/CRTOption" to="." method="_on_CRTOption_pressed"]
 [connection signal="focus_entered" from="MarginContainer/VSplitContainer/OptionsVbox/ScreenShakeOption" to="." method="_on_option_focus"]
 [connection signal="mouse_entered" from="MarginContainer/VSplitContainer/OptionsVbox/ScreenShakeOption" to="." method="_on_option_focus"]
 [connection signal="pressed" from="MarginContainer/VSplitContainer/OptionsVbox/ScreenShakeOption" to="." method="_on_ScreenShakeOption_pressed"]
-[connection signal="focus_entered" from="MarginContainer/VSplitContainer/OptionsVbox/ColorThemeOption" to="." method="_on_option_focus"]
-[connection signal="value_changed" from="MarginContainer/VSplitContainer/OptionsVbox/ColorThemeOption" to="." method="_on_ColorThemeOption_value_changed"]
 [connection signal="focus_entered" from="MarginContainer/VSplitContainer/BackButton" to="." method="_on_option_focus"]
 [connection signal="pressed" from="MarginContainer/VSplitContainer/BackButton" to="." method="_on_BackButton_pressed"]

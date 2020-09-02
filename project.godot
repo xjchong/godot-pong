@@ -39,7 +39,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/hints_overlay/HintsOverlay.gd"
 }, {
-"base": "MarginContainer",
+"base": "Control",
 "class": "MainMenu",
 "language": "GDScript",
 "path": "res://scenes/main_menu/MainMenu.gd"
