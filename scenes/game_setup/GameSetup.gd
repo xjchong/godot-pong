@@ -36,11 +36,16 @@ func _ready():
 
 
 func _unhandled_key_input(_event):
-	if (game_points_option.has_focus() or
-			match_games_option.has_focus() or
-			deuce_option.has_focus() or
-			back_button.has_focus() or
-			play_button.has_focus()):
+	if Input.is_action_just_released("ui_cancel"):
+		_on_BackButton_pressed()
+		return	
+	
+	if (Input.is_action_pressed("ui_cancel")
+			or game_points_option.has_focus()
+			or match_games_option.has_focus()
+			or deuce_option.has_focus()
+			or back_button.has_focus()
+			or play_button.has_focus()):
 		return
 
 	game_points_option.grab_focus()

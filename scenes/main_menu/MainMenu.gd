@@ -17,9 +17,10 @@ func _ready():
 
 
 func _unhandled_key_input(_event):
-	if _play_1p_button.has_focus() \
-			or _play_2p_button.has_focus() \
-			or _options_button.has_focus():
+	if (Input.is_action_just_released("ui_cancel")
+			or _play_1p_button.has_focus()
+			or _play_2p_button.has_focus()
+			or _options_button.has_focus()):
 		return
 	
 	_play_1p_button.grab_focus()
