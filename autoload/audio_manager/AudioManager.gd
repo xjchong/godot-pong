@@ -4,7 +4,8 @@ extends Node
 enum Bus { MASTER, BACKGROUND, SOUND_EFFECTS }
 
 
-const DEFAULT_VOLUME_PERCENT = 0.7
+const DEFAULT_SOUND_VOLUME_PERCENT = 0.7
+const DEFAULT_MUSIC_VOLUME_PERCENT = 0.5
 const MAX_PLAYERS: int = 8
 const BACKGROUND_BUS: String = "Background"
 const SOUND_EFFECTS_BUS: String = "SoundEffects"
@@ -79,11 +80,11 @@ func update_volume(bus: int, volume_percent: float):
 
 func _load_volume_settings():
 	var background_volume_percent = SettingsManager.load_setting(
-		"menu_music", "volume_percent", DEFAULT_VOLUME_PERCENT
+		"menu_music", "volume_percent", DEFAULT_MUSIC_VOLUME_PERCENT
 	)
 	
 	var sound_effects_volume_percent = SettingsManager.load_setting(
-		"sound_effects", "volume_percent", DEFAULT_VOLUME_PERCENT
+		"sound_effects", "volume_percent", DEFAULT_SOUND_VOLUME_PERCENT
 	)
 	
 	AudioServer.set_bus_volume_db(

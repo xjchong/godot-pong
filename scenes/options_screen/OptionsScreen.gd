@@ -116,11 +116,11 @@ func _on_settings_saved(emitter):
 	
 func _update_settings():
 	sound_effects_option.set_value(SettingsManager.load_setting(
-		"sound_effects", "volume_percent", AudioManager.DEFAULT_VOLUME_PERCENT
+		"sound_effects", "volume_percent", AudioManager.DEFAULT_SOUND_VOLUME_PERCENT
 	) * 100)
 	
 	menu_music_option.set_value(SettingsManager.load_setting(
-		"menu_music", "volume_percent", AudioManager.DEFAULT_VOLUME_PERCENT
+		"menu_music", "volume_percent", AudioManager.DEFAULT_MUSIC_VOLUME_PERCENT
 	) * 100)
 	
 	crt_option.pressed = SettingsManager.load_setting("crt", "is_enabled", true)
