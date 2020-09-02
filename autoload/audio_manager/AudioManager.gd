@@ -5,7 +5,7 @@ enum Bus { MASTER, BACKGROUND, SOUND_EFFECTS }
 
 
 const DEFAULT_SOUND_VOLUME_PERCENT = 0.7
-const DEFAULT_MUSIC_VOLUME_PERCENT = 0.5
+const DEFAULT_MUSIC_VOLUME_PERCENT = 0.6
 const MAX_PLAYERS: int = 8
 const BACKGROUND_BUS: String = "Background"
 const SOUND_EFFECTS_BUS: String = "SoundEffects"
