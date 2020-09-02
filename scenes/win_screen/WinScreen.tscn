@@ -1,22 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://theme/Main.tres" type="Theme" id=1]
 [ext_resource path="res://scenes/win_screen/WinScreen.gd" type="Script" id=2]
-
-[sub_resource type="Shader" id=1]
-code = "shader_type canvas_item;
-
-uniform float blur : hint_range(0, 6) = 0.5;
-
-void fragment() {
-	vec4 color = texture(SCREEN_TEXTURE, SCREEN_UV, blur);
-	COLOR = color;
-}"
-custom_defines = ""
-
-[sub_resource type="ShaderMaterial" id=2]
-shader = SubResource( 1 )
-shader_param/blur = 0.0
+[ext_resource path="res://assets/shaders/screen_blur.tres" type="Material" id=3]
 
 [sub_resource type="Animation" id=3]
 resource_name = "BlurOutAnimation"
@@ -39,7 +25,7 @@ pause_mode = 2
 script = ExtResource( 2 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
-material = SubResource( 2 )
+material = ExtResource( 3 )
 margin_left = -16.0
 margin_top = -16.0
 margin_right = 824.0

@@ -19,6 +19,7 @@ onready var score_board: ScoreBoard = $CanvasLayer/ScoreBoard
 onready var p1_ready: Ready = $Player1Ready
 onready var p2_ready: Ready = $Player2Ready
 onready var win_screen: WinScreen = $WinScreen
+onready var pause_screen: PauseScreen = $PauseScreen
 
 
 func _ready() -> void:
@@ -46,7 +47,7 @@ func _process(_delta):
 	
 	if is_against_ai and is_game_ready and is_game_running:
 		_handle_ai()
-	else:
+	elif !is_against_ai:
 		if Input.is_action_pressed("player_2_up"):
 			p2_paddle.move_up()
 		elif Input.is_action_pressed("player_2_down"):
@@ -54,6 +55,9 @@ func _process(_delta):
 	
 	
 func _unhandled_input(event):
+	if event.is_action_pressed("ui_cancel"):
+		pause_screen.open()
+		
 	if is_game_running:
 		return
 

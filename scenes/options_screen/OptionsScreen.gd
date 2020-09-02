@@ -2,6 +2,8 @@ class_name OptionsScreen
 extends Control
 
 
+signal back_pressed()
+
 onready var crt_layer: CRTLayer = $CRTLayer
 onready var sound_effects_option: OptionSlider = $MarginContainer/VSplitContainer/OptionsVbox/SoundEffectsSlider
 onready var menu_music_option: OptionSlider = $MarginContainer/VSplitContainer/OptionsVbox/MenuMusicSlider
@@ -10,7 +12,9 @@ onready var screen_shake_option: CheckButton = $MarginContainer/VSplitContainer/
 onready var color_theme_option: OptionSpinbox = $MarginContainer/VSplitContainer/OptionsVbox/ColorThemeOption
 onready var back_button: Button = $MarginContainer/VSplitContainer/BackButton
 
+var should_delegate_back_action := false
 var _is_ready = false
+
 
 func _ready():
 	sound_effects_option.set_value(SettingsManager.load_setting(
@@ -35,9 +39,15 @@ func _ready():
 	_is_ready = true
 	
 	
-func _unhandled_key_input(_event):
+func _unhandled_key_input(event):
+	if not visible:
+		return
+	else:
+		accept_event()
+	
 	if Input.is_action_just_released("ui_cancel"):
-		get_tree().change_scene(GlobalPath.MAIN_MENU)
+		_on_BackButton_pressed()
+		return
 		
 	if (Input.is_action_pressed("ui_cancel")
 			or sound_effects_option.has_focus() 
@@ -60,7 +70,11 @@ func _on_option_focus():
 
 func _on_BackButton_pressed():
 	AudioManager.play(Audio.PRESS)
-	get_tree().change_scene(GlobalPath.MAIN_MENU)
+	
+	if should_delegate_back_action:
+		emit_signal("back_pressed")
+	else:
+		get_tree().change_scene(GlobalPath.MAIN_MENU)
 
 
 func _on_CRTOption_pressed():
