@@ -21,6 +21,9 @@ onready var p2_ready: Ready = $Player2Ready
 onready var win_screen: WinScreen = $WinScreen
 onready var hints_overlay: HintsOverlay = $HintsOverlay
 
+var ai := AI.new()
+var p1_ai := AI.new()
+
 
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
@@ -30,6 +33,12 @@ func _ready() -> void:
 	
 	is_against_ai = GameSetting.is_against_ai
 	if is_against_ai:
+		var personalities = [
+			"lazy", "spinny", "spikey", "normy", "boss"
+		]
+		var personality = personalities[randi() % personalities.size()]
+
+		ai.setup(p2_paddle, "normy")
 		_reset_ai()
 		
 	is_game_ready = true
@@ -46,8 +55,7 @@ func _process(_delta):
 		p1_paddle.move_down()
 	
 	if is_against_ai and is_game_ready and is_game_running:
-		AI.handle(ball, p2_paddle)
-#		_handle_ai()
+		ai.handle(ball)
 	elif !is_against_ai:
 		if Input.is_action_pressed("player_2_up"):
 			p2_paddle.move_up()
@@ -134,11 +142,8 @@ func _new_game():
 
 
 func _reset_ai():
-	p2_paddle.torque_growth = 0.2
-	p2_paddle.torque_decay = 0.05
-	p2_paddle.blade_tension = 0.8
 	p2_ready.toggle()
-	AI.reset(p2_paddle)
+	ai.reset()
 
 
 func _on_ImpactTimer_timeout():

@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "AI",
+"language": "GDScript",
+"path": "res://scenes/ai/AI.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Ball",
 "language": "GDScript",
@@ -95,6 +100,7 @@ _global_script_classes=[ {
 "path": "res://scenes/win_screen/WinScreen.gd"
 } ]
 _global_script_class_icons={
+"AI": "",
 "Ball": "",
 "CRTLayer": "",
 "Game": "",
@@ -128,7 +134,6 @@ Audio="*res://autoload/Audio.gd"
 GlobalPath="*res://autoload/GlobalPath.gd"
 SettingsManager="*res://autoload/settings_manager/SettingsManager.gd"
 AudioManager="*res://autoload/audio_manager/AudioManager.tscn"
-AI="*res://autoload/AI.gd"
 
 [debug]
 
