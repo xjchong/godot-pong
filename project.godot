@@ -128,6 +128,7 @@ Audio="*res://autoload/Audio.gd"
 GlobalPath="*res://autoload/GlobalPath.gd"
 SettingsManager="*res://autoload/settings_manager/SettingsManager.gd"
 AudioManager="*res://autoload/audio_manager/AudioManager.tscn"
+AI="*res://autoload/AI.gd"
 
 [debug]
 

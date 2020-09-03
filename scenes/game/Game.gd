@@ -19,7 +19,6 @@ onready var score_board: ScoreBoard = $CanvasLayer/ScoreBoard
 onready var p1_ready: Ready = $Player1Ready
 onready var p2_ready: Ready = $Player2Ready
 onready var win_screen: WinScreen = $WinScreen
-onready var pause_screen: PauseScreen = $PauseScreen
 onready var hints_overlay: HintsOverlay = $HintsOverlay
 
 
@@ -47,7 +46,8 @@ func _process(_delta):
 		p1_paddle.move_down()
 	
 	if is_against_ai and is_game_ready and is_game_running:
-		_handle_ai()
+		AI.handle(ball, p2_paddle)
+#		_handle_ai()
 	elif !is_against_ai:
 		if Input.is_action_pressed("player_2_up"):
 			p2_paddle.move_up()
@@ -57,7 +57,7 @@ func _process(_delta):
 	
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_cancel"):
-		pause_screen.open()
+		$PauseScreen.open()
 		
 	if is_game_running:
 		return
@@ -138,50 +138,7 @@ func _reset_ai():
 	p2_paddle.torque_decay = 0.05
 	p2_paddle.blade_tension = 0.8
 	p2_ready.toggle()
-	_ai_start_pos = p2_paddle.position
-	_ai_dest_pos = p2_paddle.position
-
-
-func _handle_ai():
-	var allowable_distance = 20.0
-	var current_pos = p2_paddle.position
-	var min_pos_y = 80.0
-	var max_pos_y = 420.0
-	var boredom_chance = 0.08 # Chance of getting distracted.
-	var sleep_chance = 0.5 # Chance of not tracking the ball. 
-	var spike_desire = 0.0
-	var has_reached_dest = (
-		abs(abs(current_pos.y) - abs(_ai_dest_pos.y)) < allowable_distance
-	)
-	
-	if has_reached_dest:
-		_ai_start_pos = current_pos
-		_ai_dest_pos.x = current_pos.x
-			
-		# Set a new destination
-		if ball.velocity.x < 0 and rand_range(0, 1) < boredom_chance: 
-			_ai_dest_pos.y = rand_range(min_pos_y, max_pos_y)
-		elif ball.velocity.x < 0 and rand_range(0, 1) > sleep_chance:
-			_ai_dest_pos.y = clamp(ball.position.y, min_pos_y, max_pos_y)
-		elif ball.velocity.x > 0:
-			var next_y = ball.position.y
-			
-			if rand_range(0, 1) < spike_desire:
-				var blade_offset = p2_paddle.BLADE_LENGTH / 2.5
-				
-				next_y += rand_range(-blade_offset, blade_offset)
-				
-				if ball.velocity.y > 0:
-					next_y = ball.position.y + blade_offset
-				elif ball.velocity.y < 0:
-					next_y = ball.position.y - blade_offset
-				
-			_ai_dest_pos.y = clamp(next_y, min_pos_y, max_pos_y)
-	else:
-		if _ai_dest_pos.y > current_pos.y:
-			p2_paddle.move_down()
-		elif _ai_dest_pos.y < current_pos.y:
-			p2_paddle.move_up()
+	AI.reset(p2_paddle)
 
 
 func _on_ImpactTimer_timeout():
