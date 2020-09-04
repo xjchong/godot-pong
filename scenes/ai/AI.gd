@@ -4,7 +4,8 @@ extends Node
 
 const DEFAULT_MIN_POS_Y = 80.0
 const DEFAULT_MAX_POS_Y = 420.0
-const DEFAULT_ALLOWABLE_DISTANCE = 20.0
+const DEFAULT_ERROR_MARGIN = 20.0
+const DEFAULT_READJUST_MARGIN = 500.0
 const DEFAULT_ALERT_DISTANCE = 700.0
 const DEFAULT_BOREDOM_CHANCE = 0.08
 const DEFAULT_SLEEP_CHANCE = 0.5
@@ -17,7 +18,8 @@ const DEFAULT_MODIFIED_BLADE_TENSION = 0.8
 
 export var min_pos_y = DEFAULT_MIN_POS_Y
 export var max_pos_y = DEFAULT_MAX_POS_Y
-export var allowable_distance = DEFAULT_ALLOWABLE_DISTANCE
+export var error_margin = DEFAULT_ERROR_MARGIN
+export var readjust_margin = DEFAULT_READJUST_MARGIN
 export var alert_distance = DEFAULT_ALERT_DISTANCE
 export var boredom_chance = DEFAULT_BOREDOM_CHANCE # Chance of getting distracted.
 export var sleep_chance = DEFAULT_SLEEP_CHANCE # Chance of not tracking the ball.
@@ -63,11 +65,14 @@ func handle(ball: Ball):
 		return
 		
 	var current_pos = paddle.position
+	var is_ball_approaching = _is_ball_approaching(ball)
 	var has_reached_dest = (
-		abs(abs(current_pos.y) - abs(_ai_dest_pos.y)) < allowable_distance
+		abs(current_pos.y - _ai_dest_pos.y) < error_margin
 	)
+	var needs_readjust = (is_ball_approaching 
+			and abs(_ai_dest_pos.y - ball.position.y) > readjust_margin)
 	
-	if has_reached_dest:
+	if has_reached_dest or needs_readjust:
 		_set_new_dest(ball)
 	else:
 		if _ai_dest_pos.y > current_pos.y:
@@ -79,15 +84,15 @@ func handle(ball: Ball):
 func _set_new_dest(ball):
 	var current_pos = paddle.position
 	var _ai_start_pos = current_pos
-	var is_ball_moving_closer = _is_ball_moving_closer(ball)
+	var is_ball_approaching = _is_ball_approaching(ball)
 	_ai_dest_pos.x = current_pos.x
 		
 	# Set a new destination
-	if not is_ball_moving_closer and _is_bored():
+	if not is_ball_approaching and _is_bored():
 		_ai_dest_pos.y = rand_range(min_pos_y, max_pos_y)
-	elif not is_ball_moving_closer and not _is_asleep():
+	elif not is_ball_approaching and not _is_asleep():
 		_ai_dest_pos.y = clamp(ball.position.y, min_pos_y, max_pos_y)
-	elif is_ball_moving_closer and _is_in_alert_range(ball):
+	elif is_ball_approaching and _is_in_alert_range(ball):
 		var next_y = ball.position.y
 		
 		if rand_range(0, 1) < spike_desire:
@@ -103,7 +108,7 @@ func _set_new_dest(ball):
 		_ai_dest_pos.y = clamp(next_y, min_pos_y, max_pos_y)
 		
 			
-func _is_ball_moving_closer(ball: Ball) -> bool:
+func _is_ball_approaching(ball: Ball) -> bool:
 	if ball.position.x < paddle.position.x and ball.velocity.x > 0:
 		return true
 	elif ball.position.x > paddle.position.x and ball.velocity.x < 0:
@@ -127,17 +132,20 @@ func _is_in_alert_range(ball) -> bool:
 func _setup_default_personality():
 	min_pos_y = DEFAULT_MIN_POS_Y
 	max_pos_y = DEFAULT_MAX_POS_Y
-	allowable_distance = DEFAULT_ALLOWABLE_DISTANCE
+	error_margin = DEFAULT_ERROR_MARGIN
+	readjust_margin = DEFAULT_READJUST_MARGIN
+	alert_distance = DEFAULT_ALERT_DISTANCE
 	boredom_chance = DEFAULT_BOREDOM_CHANCE
 	sleep_chance = DEFAULT_SLEEP_CHANCE
 	spike_desire = DEFAULT_SPIKE_DESIRE
+	modified_paddle_acceleration = DEFAULT_MODIFIED_PADDLE_ACCELERATION
 	modified_torque_growth = DEFAULT_MODIFIED_TORQUE_GROWTH
 	modified_torque_decay = DEFAULT_MODIFIED_TORQUE_DECAY
 	modified_blade_tension = DEFAULT_MODIFIED_BLADE_TENSION
 
 
 func _setup_lazy_personality():
-	allowable_distance = 30.0
+	error_margin = 30.0
 	alert_distance = 600.0
 	boredom_chance = 0.0
 	sleep_chance = 0.9
@@ -147,7 +155,8 @@ func _setup_lazy_personality():
 	
 	
 func _setup_spinny_personality():
-	allowable_distance = 10.0
+	error_margin = 10.0
+	readjust_margin = 200.0
 	sleep_chance = 0.0
 	modified_torque_growth = 0.9
 	modified_blade_tension = 0.7
@@ -165,7 +174,8 @@ func _setup_normy_personality():
 	
 	
 func _setup_boss_personality():
-	allowable_distance = 15.0
+	error_margin = 15.0
+	readjust_margin = 100.0
 	boredom_chance = 0.05
 	sleep_chance = 0.2
 	spike_desire = 1.0
