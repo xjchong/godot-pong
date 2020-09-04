@@ -22,7 +22,6 @@ onready var win_screen: WinScreen = $WinScreen
 onready var hints_overlay: HintsOverlay = $HintsOverlay
 
 var ai := AI.new()
-var p1_ai := AI.new()
 
 
 func _ready() -> void:
@@ -38,7 +37,7 @@ func _ready() -> void:
 		]
 		var personality = personalities[randi() % personalities.size()]
 
-		ai.setup(p2_paddle, "normy")
+		ai.setup(p2_paddle, "spinny")
 		_reset_ai()
 		
 	is_game_ready = true
@@ -55,6 +54,7 @@ func _process(_delta):
 		p1_paddle.move_down()
 	
 	if is_against_ai and is_game_ready and is_game_running:
+#		p1_ai.handle(ball)
 		ai.handle(ball)
 	elif !is_against_ai:
 		if Input.is_action_pressed("player_2_up"):

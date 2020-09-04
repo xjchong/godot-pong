@@ -44,11 +44,11 @@ position = Vector2( 400, 0 )
 position = Vector2( 400, 496 )
 
 [node name="Player1Goal" parent="." instance=ExtResource( 5 )]
-position = Vector2( -16, 0 )
+position = Vector2( -72, 0 )
 player_id = 1
 
 [node name="Player2Goal" parent="." instance=ExtResource( 5 )]
-position = Vector2( 816, 0 )
+position = Vector2( 872, 0 )
 player_id = 2
 
 [node name="Player1Ready" parent="." instance=ExtResource( 8 )]
@@ -62,7 +62,6 @@ margin_left = 416.0
 margin_top = 96.0
 margin_right = 483.0
 margin_bottom = 108.0
-custom_colors/font_color = Color( 0.992157, 0.960784, 0.890196, 1 )
 
 [node name="HintsOverlay" parent="." instance=ExtResource( 12 )]
 

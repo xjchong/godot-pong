@@ -3,7 +3,7 @@
 [ext_resource path="res://scenes/goal/Goal.gd" type="Script" id=1]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 10, 266 )
+extents = Vector2( 48, 378 )
 
 [node name="Goal" type="Area2D"]
 script = ExtResource( 1 )

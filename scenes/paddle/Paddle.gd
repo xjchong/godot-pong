@@ -4,7 +4,7 @@ extends KinematicBody2D
 
 const MAX_VELOCITY: float = 15.0
 const MAX_TORQUE: float = 15.0
-const ACCELERATION: float = 0.15
+const DEFAULT_ACCELERATION = 0.15
 const DECCELERATION: float = 0.2
 const BLADE_LENGTH: float = 112.0 # Should equal paddle height in pixels.
 const BLADE_CONTROL_DECAY: float = 2.0 # Higher control has less vertical velocity variance.
@@ -13,6 +13,7 @@ const BLADE_CONTROL_MAX_VARIANCE: float = 500.0 # Maximum vertical velocity appl
 export var player_id: int
 export var default_position: Vector2
 
+var acceleration: float = DEFAULT_ACCELERATION
 var velocity: Vector2 = Vector2()
 var blade_tension: float = 0.8 # Horizontal hit velocity multipler on counter.
 var torque_growth: float = 0.1
@@ -39,13 +40,13 @@ func _physics_process(_delta):
 	
 	
 func move_up():
-	velocity.y = lerp(velocity.y, -MAX_VELOCITY, ACCELERATION)
+	velocity.y = lerp(velocity.y, -MAX_VELOCITY, acceleration)
 	torque = lerp(torque, -MAX_TORQUE, torque_growth)
 	_did_move = true
 	
 
 func move_down():
-	velocity.y = lerp(velocity.y, MAX_VELOCITY, ACCELERATION)
+	velocity.y = lerp(velocity.y, MAX_VELOCITY, acceleration)
 	torque = lerp(torque, MAX_TORQUE, torque_growth)
 	_did_move = true
 	
