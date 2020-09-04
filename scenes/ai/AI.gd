@@ -32,19 +32,19 @@ var _ai_dest_pos := Vector2()
 var paddle: Paddle = null
 
 
-func setup(new_paddle: Paddle, personality: String):
+func setup(new_paddle: Paddle, setting: int):
 	_setup_default_personality()
 	
-	match personality:
-		"lazy": 
+	match setting:
+		1: 
 			_setup_lazy_personality()
-		"spinny":
-			_setup_spinny_personality()
-		"spikey":
-			_setup_spikey_personality()
-		"normy":
+		2:
 			_setup_normy_personality()
-		"boss":
+		3:
+			_setup_spinny_personality()
+		4:
+			_setup_spikey_personality()
+		5:
 			_setup_boss_personality()
 			
 	paddle = new_paddle

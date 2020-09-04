@@ -32,12 +32,9 @@ func _ready() -> void:
 	
 	is_against_ai = GameSetting.is_against_ai
 	if is_against_ai:
-		var personalities = [
-			"lazy", "spinny", "spikey", "normy", "boss"
-		]
-		var personality = personalities[randi() % personalities.size()]
-
-		ai.setup(p2_paddle, "spinny")
+		var ai_setting = SettingsManager.load_setting("1p_match", "ai", 2)
+		
+		ai.setup(p2_paddle, ai_setting)
 		_reset_ai()
 		
 	is_game_ready = true

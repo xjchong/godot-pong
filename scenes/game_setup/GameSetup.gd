@@ -6,6 +6,7 @@ onready var title_label: Label = $VSplitContainer/VBoxContainer/TitleContainer/T
 onready var game_points_option: OptionSpinbox = $VSplitContainer/VBoxContainer/GamePointsOption
 onready var match_games_option: OptionSpinbox = $VSplitContainer/VBoxContainer/MatchGamesOption
 onready var deuce_option: CheckButton = $VSplitContainer/VBoxContainer/DeuceOption
+onready var ai_option: OptionSpinbox = $VSplitContainer/VBoxContainer/AiOptionContainer/AiOption
 onready var back_button: Button = $VSplitContainer/HBoxContainer3/BackButton
 onready var play_button: Button = $VSplitContainer/HBoxContainer3/PlayButton
 
@@ -15,6 +16,7 @@ var section: String
 var game_points: int
 var match_games: int
 var is_deuce_enabled: bool
+var ai: int
 
 var _is_ready := false
 
@@ -27,6 +29,13 @@ func _ready():
 	game_points = SettingsManager.load_setting(section, "game_points", 11)
 	match_games = SettingsManager.load_setting(section, "match_games", 3)
 	is_deuce_enabled = SettingsManager.load_setting(section, "is_deuce_enabled", true)
+	
+	if is_against_ai:
+		ai = SettingsManager.load_setting("1p_match", "ai", 2)
+		_update_ai_option_label()
+		ai_option.value = ai
+	else:
+		ai_option.hide()
 	
 	game_points_option.value = game_points
 	match_games_option.value = match_games
@@ -44,6 +53,7 @@ func _unhandled_key_input(_event):
 			or game_points_option.has_focus()
 			or match_games_option.has_focus()
 			or deuce_option.has_focus()
+			or ai_option.has_focus()
 			or back_button.has_focus()
 			or play_button.has_focus()):
 		return
@@ -77,6 +87,14 @@ func _on_DeuceOption_toggled(button_pressed):
 	
 	if _is_ready:
 		AudioManager.play(Audio.PRESS)
+		
+
+func _on_AiOption_value_changed(new_value):
+	ai = new_value
+	_update_ai_option_label()
+	
+	if _is_ready:
+		AudioManager.play(Audio.PRESS)
 
 
 func _on_BackButton_pressed():
@@ -85,10 +103,33 @@ func _on_BackButton_pressed():
 
 
 func _on_PlayButton_pressed():
-	SettingsManager.save_setting(self,section, "game_points", game_points)
-	SettingsManager.save_setting(self,section, "match_games", match_games)
-	SettingsManager.save_setting(self,section, "is_deuce_enabled", is_deuce_enabled)
+	SettingsManager.save_setting(self, section, "game_points", game_points)
+	SettingsManager.save_setting(self, section, "match_games", match_games)
+	SettingsManager.save_setting(self, section, "is_deuce_enabled", is_deuce_enabled)
+	
+	if GameSetting.is_against_ai:
+		SettingsManager.save_setting(self, "1p_match", "ai", ai)
 	
 	AudioManager.play(Audio.PRESS)
 	AudioManager.end_loop()
 	get_tree().change_scene(GlobalPath.GAME)
+	
+	
+func _update_ai_option_label():
+	if ai_option == null:
+		return
+		
+	var format_string = "AI (%s)"
+	
+	match ai:
+		1:
+			ai_option.set_title(format_string % "lazy")
+		2:
+			ai_option.set_title(format_string % "normy")
+		3:
+			ai_option.set_title(format_string % "spinny")
+		4:
+			ai_option.set_title(format_string % "spikey")
+		5:
+			ai_option.set_title(format_string % "boss")
+

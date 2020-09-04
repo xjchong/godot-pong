@@ -19,7 +19,9 @@ export var value: int = 0 setget value_set
 
 func value_set(new_value):
 	value = new_value
-	hidden_slider.value = new_value
+	
+	if hidden_slider != null:
+		hidden_slider.value = new_value
 
 
 func _ready():
@@ -83,6 +85,10 @@ func has_focus() -> bool:
 	
 func grab_focus():
 	hidden_slider.grab_focus()
+	
+	
+func set_title(new_title: String):
+	title_label.text = new_title
 	
 	
 func _focus_control(control):

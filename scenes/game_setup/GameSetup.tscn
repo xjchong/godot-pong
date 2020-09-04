@@ -79,6 +79,20 @@ pressed = true
 action_mode = 0
 text = "Deuce Rules"
 
+[node name="AiOptionContainer" type="MarginContainer" parent="VSplitContainer/VBoxContainer"]
+margin_top = 198.0
+margin_right = 500.0
+margin_bottom = 250.0
+custom_constants/margin_top = 20
+
+[node name="AiOption" parent="VSplitContainer/VBoxContainer/AiOptionContainer" instance=ExtResource( 5 )]
+margin_top = 20.0
+margin_bottom = 52.0
+title = "AI (normy)"
+min_value = 1
+max_value = 5
+value = 2
+
 [node name="HBoxContainer3" type="HBoxContainer" parent="VSplitContainer"]
 margin_top = 368.0
 margin_right = 500.0
@@ -104,6 +118,8 @@ align = 2
 [connection signal="value_changed" from="VSplitContainer/VBoxContainer/MatchGamesOption" to="." method="_on_MatchGamesOption_value_changed"]
 [connection signal="focus_entered" from="VSplitContainer/VBoxContainer/DeuceOption" to="." method="_on_option_focus"]
 [connection signal="toggled" from="VSplitContainer/VBoxContainer/DeuceOption" to="." method="_on_DeuceOption_toggled"]
+[connection signal="focus_entered" from="VSplitContainer/VBoxContainer/AiOptionContainer/AiOption" to="." method="_on_option_focus"]
+[connection signal="value_changed" from="VSplitContainer/VBoxContainer/AiOptionContainer/AiOption" to="." method="_on_AiOption_value_changed"]
 [connection signal="focus_entered" from="VSplitContainer/HBoxContainer3/BackButton" to="." method="_on_option_focus"]
 [connection signal="pressed" from="VSplitContainer/HBoxContainer3/BackButton" to="." method="_on_BackButton_pressed"]
 [connection signal="focus_entered" from="VSplitContainer/HBoxContainer3/PlayButton" to="." method="_on_option_focus"]
