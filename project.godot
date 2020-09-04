@@ -212,5 +212,6 @@ player_2_ready={
 
 [rendering]
 
+quality/driver/driver_name="GLES2"
 environment/default_clear_color=Color( 0.0980392, 0.0117647, 0.192157, 1 )
 environment/default_environment="res://default_env.tres"
