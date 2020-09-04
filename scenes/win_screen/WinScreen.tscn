@@ -24,6 +24,16 @@ tracks/0/keys = {
 pause_mode = 2
 script = ExtResource( 2 )
 
+[node name="DimRect" type="ColorRect" parent="."]
+margin_right = 800.0
+margin_bottom = 500.0
+color = Color( 0, 0, 0, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DimTween" type="Tween" parent="DimRect"]
+
 [node name="BlurRect" type="ColorRect" parent="."]
 visible = false
 material = ExtResource( 3 )

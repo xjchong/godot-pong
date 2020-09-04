@@ -78,7 +78,6 @@ void fragment() {
 	
 	COLOR = vec4(color, 1.0);
 }"
-custom_defines = ""
 
 [resource]
 shader = SubResource( 1 )

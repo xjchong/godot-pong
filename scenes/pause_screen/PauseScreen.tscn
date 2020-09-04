@@ -29,6 +29,16 @@ pause_mode = 2
 layer = 2
 script = ExtResource( 4 )
 
+[node name="DimRect" type="ColorRect" parent="."]
+margin_right = 800.0
+margin_bottom = 500.0
+color = Color( 0, 0, 0, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DimTween" type="Tween" parent="DimRect"]
+
 [node name="BlurRect" type="ColorRect" parent="."]
 material = SubResource( 2 )
 margin_right = 800.0
@@ -63,38 +73,38 @@ size_flags_vertical = 4
 custom_constants/separation = 20
 
 [node name="MarginContainer" type="MarginContainer" parent="BlurRect/MenuContainer/VBoxContainer"]
-margin_right = 252.0
+margin_right = 308.0
 margin_bottom = 78.0
 custom_constants/margin_bottom = 30
 
 [node name="TitleLabel" type="Label" parent="BlurRect/MenuContainer/VBoxContainer/MarginContainer"]
-margin_right = 252.0
+margin_left = 28.0
+margin_right = 280.0
 margin_bottom = 48.0
 size_flags_horizontal = 4
 custom_fonts/font = SubResource( 3 )
 text = "Paused"
 
 [node name="ResumeButton" type="Button" parent="BlurRect/MenuContainer/VBoxContainer"]
-margin_left = 38.0
+margin_left = 66.0
 margin_top = 98.0
-margin_right = 214.0
+margin_right = 242.0
 margin_bottom = 130.0
 focus_neighbour_top = NodePath("../QuitButton")
 size_flags_horizontal = 4
 text = "Resume"
 
 [node name="OptionsButton" type="Button" parent="BlurRect/MenuContainer/VBoxContainer"]
-margin_left = 24.0
+margin_left = 52.0
 margin_top = 150.0
-margin_right = 228.0
+margin_right = 256.0
 margin_bottom = 182.0
 size_flags_horizontal = 4
 text = "Options"
 
 [node name="QuitButton" type="Button" parent="BlurRect/MenuContainer/VBoxContainer"]
-margin_left = 70.0
 margin_top = 202.0
-margin_right = 182.0
+margin_right = 308.0
 margin_bottom = 234.0
 focus_neighbour_bottom = NodePath("../ResumeButton")
 size_flags_horizontal = 4

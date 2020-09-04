@@ -9,7 +9,6 @@ void fragment() {
 	vec4 color = texture(SCREEN_TEXTURE, SCREEN_UV, blur);
 	COLOR = color;
 }"
-custom_defines = ""
 
 [resource]
 shader = SubResource( 1 )

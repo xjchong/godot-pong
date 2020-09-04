@@ -3,8 +3,11 @@ extends CanvasLayer
 
 
 const MAX_BLUR := 2.8
+const MAX_DIM := 0.6
 const BLUR_DURATION := 0.2
 
+onready var dim_rect: ColorRect = $DimRect
+onready var dim_tween: Tween = $DimRect/DimTween
 onready var blur_rect: ColorRect = $BlurRect
 onready var blur_tween: Tween = $BlurRect/BlurTween
 onready var menu_container: MarginContainer = $BlurRect/MenuContainer
@@ -41,7 +44,7 @@ func open():
 	AudioManager.play(Audio.PRESS)
 	get_tree().paused = true
 	
-	_tween_blur(MAX_BLUR)
+	_tween_blur(MAX_BLUR, MAX_DIM)
 	yield(blur_tween, "tween_completed")
 	
 	menu_container.visible = true
@@ -51,7 +54,7 @@ func close():
 	AudioManager.play(Audio.PRESS)
 	menu_container.visible = false
 
-	_tween_blur(0)
+	_tween_blur(0, 0)
 	yield(blur_tween, "tween_completed")
 
 	get_tree().paused = false
@@ -64,11 +67,17 @@ func _on_button_focus():
 	AudioManager.play(Audio.FOCUS)
 	
 	
-func _tween_blur(blur_value):
+func _tween_blur(blur_value, dim_value: float):
 	blur_tween.interpolate_property(
 		blur_rect.material, "shader_param/blur", 
 		blur_rect.material.get_shader_param("blur"), blur_value, BLUR_DURATION)
 	blur_tween.start()
+	
+	dim_tween.interpolate_property(
+		dim_rect, "color", dim_rect.color, Color(0, 0, 0, dim_value), 
+		BLUR_DURATION
+	)
+	dim_tween.start()
 		
 		
 func _on_ResumeButton_pressed():
