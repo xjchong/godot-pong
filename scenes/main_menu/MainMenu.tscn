@@ -114,7 +114,7 @@ anchor_bottom = 0.0
 
 [node name="CRTLayer" parent="." instance=ExtResource( 6 )]
 
-[node name="Label" type="Label" parent="."]
+[node name="MenuMusicLicenseLabel" type="Label" parent="."]
 margin_left = 88.0
 margin_top = 464.0
 margin_right = 710.0
